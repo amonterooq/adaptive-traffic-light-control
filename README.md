@@ -278,7 +278,9 @@ Grado en Ingeniería Telemática en Telecomunicación. La memoria de referencia
 se utiliza para contrastar el proyecto; la documentación administrativa y la
 memoria completa no se redistribuyen en esta preparación.
 
-**Licencia del código pendiente de autorización de la autora.** No se ha aplicado
-una licencia de software. La cartografía mantiene sus condiciones ODbL y las
-dependencias sus propias licencias: [atribuciones](datos/entrada/ATRIBUCION.md)
-y [recursos de terceros](docs/TERCEROS.md).
+El código propio y su documentación de software se distribuyen bajo la
+[licencia MIT](LICENSE), © 2026 Ana Montero Preciado. Esta licencia no sustituye
+las condiciones de la cartografía ODbL ni las licencias de las dependencias.
+Las imágenes, capturas y datos se distinguen en [recursos de terceros y alcance
+de la licencia](docs/TERCEROS.md); véanse también las
+[atribuciones cartográficas](datos/entrada/ATRIBUCION.md).

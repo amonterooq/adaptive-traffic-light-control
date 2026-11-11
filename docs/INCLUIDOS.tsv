@@ -42,7 +42,7 @@ docs/pruebas-navegador.json	6950
 docs/PUBLICACION.md	1275
 docs/REVISION_PUBLICACION.md	4497
 docs/seguridad.json	502
-docs/TERCEROS.md	3534
+docs/TERCEROS.md	3895
 docs/validacion-pytest.xml	14362
 docs/validacion-web.json	593
 docs/VALIDACION.md	5506
@@ -124,6 +124,7 @@ documentacion/resultados/resultados_tabla.tex	399
 documentacion/resultados/sensibilidad_tabla.tex	644
 examples/simulacion_breve.py	1377
 Iniciar aplicación.cmd	640
+LICENSE	1077
 programa/abrir.py	2466
 programa/iniciar.py	351
 programa/its/__init__.py	80
@@ -172,7 +173,7 @@ programa/web/index.html	29897
 programa/web/scene.js	28490
 programa/web/style.css	22681
 pyproject.toml	213
-README.md	13961
+README.md	14107
 README.txt	3570
 requirements-lock.txt	906
 requirements.txt	297

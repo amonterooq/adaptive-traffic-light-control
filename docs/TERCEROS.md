@@ -3,11 +3,12 @@
 Revisión: 11 de noviembre de 2026. La autora ha confirmado ser la única titular
 del proyecto y no conocer restricciones de publicación. Ha confirmado que
 `programa/web/assets/acueducto-merida.png` es propia y ha autorizado incluirla.
-Esta confirmación no equivale a aplicar una licencia de software.
+Posteriormente, la autora autorizó expresamente aplicar MIT al código propio
+y hacer público el repositorio.
 
 ## Contenido que se distribuye
 
-- Código y documentación del proyecto: Ana Montero Preciado. Licencia pendiente.
+- Código propio y documentación de software: Ana Montero Preciado, [MIT](../LICENSE).
 - Imagen del acueducto: obra propia, inclusión autorizada por la autora.
 - Capturas de la aplicación y gráficos del proyecto: conservados desde la entrega.
 - Cartografía y redes derivadas: © OpenStreetMap contributors, ODbL 1.0.
@@ -17,7 +18,7 @@ Esta confirmación no equivale a aplicar una licencia de software.
   académica, artículos completos ni el PDF de la memoria.
 
 OpenStreetMap exige atribución e identificación de la licencia de sus datos;
-su licencia no se reemplaza por la futura licencia del código.
+su licencia no se reemplaza por la licencia MIT del código.
 Fuentes: [OSM Copyright](https://www.openstreetmap.org/copyright) y
 [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/).
 
@@ -54,9 +55,15 @@ Fuentes oficiales comprobadas: [licencias SUMO](https://sumo.dlr.de/docs/Librari
 El inventario es una revisión técnica de procedencia y metadatos, no una
 resolución jurídica de compatibilidad para cualquier forma de distribución.
 
-## Decisión pendiente sobre el código
+## Alcance de MIT
 
-Se puede valorar MIT para el código propio si la autora quiere permitir su
-reutilización con atribución y sin garantía. No se aplica ni se añade `LICENSE`
-sin autorización expresa. La futura licencia debe delimitar código propio,
-datos OSM, imágenes y dependencias, manteniendo sus avisos respectivos.
+MIT se aplica al código propio y a su documentación de software, por autorización
+de la autora el 11 de noviembre de 2026. Texto de referencia:
+[Open Source Initiative](https://opensource.org/license/mit).
+
+La licencia no se extiende a la cartografía ni a las redes derivadas de OSM,
+que mantienen ODbL, ni a las dependencias, que conservan sus licencias.
+La autorización de inclusión de la imagen del acueducto, las capturas y los
+gráficos no se convierte en una licencia general sobre recursos visuales.
+Los resultados experimentales se incluyen para consulta y reproducción;
+no se les asigna aquí una licencia de datos independiente.
