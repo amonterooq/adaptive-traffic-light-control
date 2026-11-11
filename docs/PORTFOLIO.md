@@ -1,10 +1,9 @@
 # Material para CV, LinkedIn e entrevistas
 
 Borradores basados en la implementación y evaluación del TFG. El repositorio
-ya se ha subido como [repositorio privado](https://github.com/amonterooq/adaptive-traffic-light-control).
-El texto de anuncio solo debe utilizarse cuando
-exista un enlace accesible para su audiencia; un repositorio privado no sirve
-como enlace público para reclutadores.
+ya está disponible como [repositorio público](https://github.com/amonterooq/adaptive-traffic-light-control),
+con licencia MIT para el código propio. El enlace puede compartirse en el CV,
+la sección Proyectos y la publicación de LinkedIn.
 
 ## CV
 
@@ -50,7 +49,7 @@ El proyecto incluye instrucciones de reproducción, pruebas y una explicación
 de sus límites. Los escenarios y las comunicaciones V2I son simulados, sin
 validación de campo.
 
-Añadir aquí el enlace público una vez autorizado y verificado.
+Repositorio: https://github.com/amonterooq/adaptive-traffic-light-control
 
 #IngenieríaTelemática #Python #SUMO #ITS #Simulación #TFG
 

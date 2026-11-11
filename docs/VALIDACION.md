@@ -83,4 +83,5 @@ Se entregan capturas reales; no se ha generado GIF o vídeo.
 
 Tras la autorización de la autora se creó el repositorio privado y se verificó
 el README renderizado, el diagrama Mermaid y las cuatro imágenes incrustadas
-en GitHub. No se cambió la visibilidad a pública. Véase [PUBLICACION.md](PUBLICACION.md).
+en GitHub. Tras una segunda autorización expresa se añadió MIT al código propio
+y se cambió la visibilidad a pública. Véase [PUBLICACION.md](PUBLICACION.md).
