@@ -1,5 +1,9 @@
 # Revisión previa a la primera publicación
 
+> Registro de la revisión previa, posteriormente aprobada por la autora.
+> La publicación privada ya se ha realizado: véase [PUBLICACION.md](PUBLICACION.md).
+> El contenido siguiente conserva las decisiones presentadas antes de subir.
+
 Estado: copia local preparada; **no publicada**. La autora pidió expresamente
 aprobar el contenido antes de la primera subida y mantener inicialmente el
 repositorio privado. La publicación y la licencia son decisiones separadas.

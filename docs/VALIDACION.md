@@ -81,6 +81,6 @@ hardware real, tráfico real ni servicios radio. No se ha repetido la batería
 completa de 336 simulaciones ni los seis diagnósticos largos adicionales.
 Se entregan capturas reales; no se ha generado GIF o vídeo.
 
-La visualización de Markdown/Mermaid e imágenes en GitHub y la verificación
-del contenido remoto quedan pendientes de la autorización y primera publicación.
-No se ha creado un repositorio remoto ni cambiado su visibilidad.
+Tras la autorización de la autora se creó el repositorio privado y se verificó
+el README renderizado, el diagrama Mermaid y las cuatro imágenes incrustadas
+en GitHub. No se cambió la visibilidad a pública. Véase [PUBLICACION.md](PUBLICACION.md).

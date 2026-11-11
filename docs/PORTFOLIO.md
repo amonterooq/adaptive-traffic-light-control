@@ -1,7 +1,8 @@
 # Material para CV, LinkedIn e entrevistas
 
 Borradores basados en la implementación y evaluación del TFG. El repositorio
-todavía no se ha publicado. El texto de anuncio solo debe utilizarse cuando
+ya se ha subido como [repositorio privado](https://github.com/amonterooq/adaptive-traffic-light-control).
+El texto de anuncio solo debe utilizarse cuando
 exista un enlace accesible para su audiencia; un repositorio privado no sirve
 como enlace público para reclutadores.
 
