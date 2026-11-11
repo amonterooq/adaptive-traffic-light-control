@@ -1,0 +1,48 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{
+ const out=process.env.ITS_SCREENSHOTS||path.resolve('documentacion/capturas');
+ const browser=await chromium.launch({headless:true,channel:process.env.ITS_BROWSER||undefined});
+ const page=await browser.newPage({viewport:{width:1440,height:1100}}),checks=[],errors=[];
+ page.on('pageerror',e=>errors.push(String(e)));
+ const check=(name,ok)=>{assert.ok(ok,name);checks.push(name);};
+ const url=p=>new URL(p,page.url()).href;
+ try{
+  await page.goto(process.env.ITS_URL||'http://127.0.0.1:8768');
+  await page.waitForSelector('#point-santa_eulalia');
+  check('dos lugares semaforizados y laboratorio con tráfico mixto',await page.locator('.point-card').count()===3&&await page.locator('#fleet').inputValue()==='mixto');
+  check('70 km/h restringido al laboratorio',await page.locator('#traffic-speeds option[value=exceso]').isDisabled());
+  await page.locator('#point-santa_eulalia button').click();
+  await page.waitForFunction(()=>window.sceneView.geometry?.location==='santa_eulalia');
+  check('anillo circular y salida Don Benito',await page.evaluate(()=>window.sceneView.geometry.lanes.some(l=>l.id==='D_out_0')&&window.sceneView.geometry.lanes.filter(l=>l.id.startsWith('ring_')).length>20));
+  await page.locator('#scenario').selectOption('escolar');await page.locator('#pedestrian-profile').selectOption('escolar');
+  await page.locator('#sensing-mode').selectOption('sensors');await page.locator('#speed').selectOption('10');
+  await page.locator('#start').click();
+  await page.waitForFunction(()=>window.sceneView.frames.some(f=>f.sample.camera_detected>0),{},{timeout:30000});
+  check('cámara detecta vehículos sin V2I',true);
+  await page.waitForFunction(()=>window.sceneView.agents.some(a=>a.kind==='person'&&a.road.includes('_c'))&&new Set(window.sceneView.frames.flatMap(f=>f.agents.filter(a=>a.kind==='vehicle').map(a=>a.vehicle_type))).size===4,{},{timeout:30000});
+  await page.locator('#pause').click();await page.waitForFunction(()=>window.sceneView.paused);
+  check('paso peatonal con vehículos detenidos',await page.evaluate(()=>window.sceneView.frames.at(-1).sample.state==='rrrr'));
+  check('tipos de vehículo distintos en la escena',await page.evaluate(()=>new Set(window.sceneView.frames.flatMap(f=>f.agents.filter(a=>a.kind==='vehicle').map(a=>a.vehicle_type))).size===4));
+  await page.locator('.scene-card').screenshot({path:path.join(out,'rotonda_escolar.png')});
+  await page.locator('.cooperative-panel').screenshot({path:path.join(out,'camara_mixta.png')});
+  await page.reload();await page.waitForFunction(()=>window.sceneView.paused&&window.sceneView.location==='santa_eulalia');
+  check('recarga conserva flota velocidad cámara y perfil escolar',await page.locator('#fleet').inputValue()==='mixto'&&await page.locator('#traffic-speeds').inputValue()==='variable'&&await page.locator('#camera-enabled').isChecked()&&await page.locator('#scenario').inputValue()==='escolar');
+  await page.setViewportSize({width:390,height:844});await page.locator('.scene-card').scrollIntoViewIfNeeded();
+  check('rotonda y controles caben en móvil',await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
+  await page.screenshot({path:path.join(out,'rotonda_movil.png')});
+  await page.setViewportSize({width:1440,height:1100});await page.locator('#speed').selectOption('100');await page.locator('#pause').click();
+  await page.waitForFunction(()=>window.sceneView.status==='complete',{},{timeout:30000});
+  const state=await(await page.request.get(url('/api/state'))).json();
+  check('rotonda completa viajes sin conflictos ni colisiones',state.summary.completed&&state.summary.collisions===0&&state.summary.ped_conflicts===0);
+  check('CO2 registrado por tipo y sin escape en bicicletas',state.summary.co2_mean_g>0&&state.summary.co2_by_type_g.bicicleta===0);
+  const csv=await(await page.request.get(url(`/api/runs/${state.id}/export`))).text();
+  check('CSV conserva cámara y aproximaciones combinadas',csv.includes('camera_bicicleta')&&csv.includes('fusion_approaching'));
+  await page.locator('#point-laboratorio button').click();
+  check('exceso de velocidad disponible en laboratorio',!(await page.locator('#traffic-speeds option[value=exceso]').isDisabled()));
+  await page.locator('#traffic-speeds').selectOption('exceso');await page.locator('#point-lusitania button').click();
+  check('cambiar a la ciudad restablece velocidad permitida por el modelo',await page.locator('#traffic-speeds').inputValue()==='variable');
+  check('sin errores JavaScript',errors.length===0);
+  const report={passed:true,date:new Date().toISOString(),checks,errors};fs.writeFileSync(path.join(out,'prueba_mixta.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

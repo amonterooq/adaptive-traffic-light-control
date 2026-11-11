@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="530" viewBox="0 0 620 530">
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#42675f"/></marker></defs>
+<rect width="620" height="530" fill="white"/>
+<rect x="12" y="8" width="596" height="35" rx="8" fill="#ffffff" stroke="#8aa99d"/>
+<text x="310.0" y="30.833333333333332" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Modelo de intersección usado en los experimentos</text>
+<rect x="220" y="65" width="180" height="65" rx="8" fill="#f3f5f1" stroke="#8aa99d"/>
+<text x="310.0" y="85.05555555555556" text-anchor="middle" font-family="Arial" font-size="15.666666666666668" fill="#23473e" font-weight="bold">Norte</text>
+<text x="310.0" y="102.72222222222223" text-anchor="middle" font-family="Arial" font-size="15.666666666666668" fill="#23473e" font-weight="normal">Entrada y salida: 300</text>
+<text x="310.0" y="120.38888888888889" text-anchor="middle" font-family="Arial" font-size="15.666666666666668" fill="#23473e" font-weight="normal">m</text>
+<rect x="410" y="225" width="180" height="65" rx="8" fill="#f3f5f1" stroke="#8aa99d"/>
+<text x="500.0" y="253.83333333333334" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Este</text>
+<text x="500.0" y="271.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">300 m</text>
+<rect x="220" y="385" width="180" height="65" rx="8" fill="#f3f5f1" stroke="#8aa99d"/>
+<text x="310.0" y="405.05555555555554" text-anchor="middle" font-family="Arial" font-size="15.666666666666668" fill="#23473e" font-weight="bold">Sur</text>
+<text x="310.0" y="422.72222222222223" text-anchor="middle" font-family="Arial" font-size="15.666666666666668" fill="#23473e" font-weight="normal">Entrada y salida: 300</text>
+<text x="310.0" y="440.38888888888886" text-anchor="middle" font-family="Arial" font-size="15.666666666666668" fill="#23473e" font-weight="normal">m</text>
+<rect x="30" y="225" width="180" height="65" rx="8" fill="#f3f5f1" stroke="#8aa99d"/>
+<text x="120.0" y="253.83333333333334" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Oeste</text>
+<text x="120.0" y="271.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">300 m</text>
+<rect x="245" y="230" width="130" height="55" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="310.0" y="253.83333333333334" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">J1</text>
+<text x="310.0" y="271.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Dos ejes</text>
+<path d="M310.0,130 L310.0,230" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="310.0" y="173.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">N/S</text>
+<path d="M310.0,285 L310.0,385" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M210,257.5 L245,257.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="227.5" y="250.5" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">E/O</text>
+<path d="M375,257.5 L410,257.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="310.0" y="496" text-anchor="middle" font-family="Arial" font-size="12" fill="#23473e" font-weight="normal">Un carril por sentido, movimientos rectos y detectores en los accesos.</text>
+<text x="310.0" y="512" text-anchor="middle" font-family="Arial" font-size="12" fill="#23473e" font-weight="normal">La ubicación geográfica es real; esta geometría y sus parámetros son sintéticos.</text>
+</svg>

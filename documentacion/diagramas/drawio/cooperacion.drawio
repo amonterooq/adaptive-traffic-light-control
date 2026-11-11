@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Adquisición híbrida: del coche y la acera al semáforo" id="cooperacion">
+    <mxGraphModel pageWidth="940" pageHeight="510">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Adquisición híbrida: del coche y la acera al semáforo" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="916" height="35" />
+        </mxCell>
+        <mxCell id="cars" value="Vehículos equipados&#10;Posición, velocidad e&#10;instante&#10;Informes emulados" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="75" width="210" height="80" />
+        </mxCell>
+        <mxCell id="rsu" value="Receptor / RSU lógica&#10;Retardo, pérdidas y&#10;caducidad&#10;Estimación de llegada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="345" y="75" width="240" height="80" />
+        </mxCell>
+        <mxCell id="det" value="Sensores virtuales&#10;Colas en accesos&#10;Presencia peatonal" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="245" width="210" height="80" />
+        </mxCell>
+        <mxCell id="fusion" value="Fusión por acceso&#10;Cola + aproximaciones&#10;Sin duplicar detenidos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="345" y="245" width="240" height="80" />
+        </mxCell>
+        <mxCell id="control" value="Controlador local&#10;Fases y solicitudes&#10;Comprobación del despeje" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="695" y="245" width="225" height="80" />
+        </mxCell>
+        <mxCell id="panel" value="Panel y almacenamiento&#10;Métricas por ubicación" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="345" y="395" width="240" height="65" />
+        </mxCell>
+        <mxCell id="future" value="Evolución de campo&#10;Una unidad por cruce&#10;Supervisión conjunta" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.666666666666668;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="695" y="395" width="225" height="65" />
+        </mxCell>
+        <mxCell id="e0" value="V2I" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="cars" target="rsu">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="Avisos vigentes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="rsu" target="fusion">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="Observaciones" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="det" target="fusion">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="Demanda" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="fusion" target="control">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="Registro" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="fusion" target="panel">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" value="Propuesta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="control" target="future">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="Prototipo: una simulación activa. No se emula radio ni se coordinan varios semáforos urbanos." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="480" width="910" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

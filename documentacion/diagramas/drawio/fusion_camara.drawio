@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Vehículos conectados y detección desde la infraestructura" id="fusion_camara">
+    <mxGraphModel pageWidth="900" pageHeight="460">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Vehículos conectados y detección desde la infraestructura" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="876" height="35" />
+        </mxCell>
+        <mxCell id="cam" value="Cámara emulada&#10;Tipo, posición y velocidad&#10;Con omisiones&#10;configurables" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="85" width="230" height="80" />
+        </mxCell>
+        <mxCell id="v2i" value="Avisos V2I&#10;Fracción de coches y&#10;motos&#10;Distancia, velocidad e&#10;instante" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=11.6;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="335" y="85" width="230" height="80" />
+        </mxCell>
+        <mxCell id="e2" value="Sensores del cruce&#10;Colas E2 y peatones&#10;Disponibles sin V2I" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="645" y="85" width="230" height="80" />
+        </mxCell>
+        <mxCell id="fusion" value="Fusión por identificador&#10;Una aproximación por vehículo&#10;ETA con velocidad observada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="180" y="255" width="265" height="75" />
+        </mxCell>
+        <mxCell id="control" value="Control local&#10;Colas y próximas llegadas&#10;Fases y despeje peatonal" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="605" y="255" width="265" height="75" />
+        </mxCell>
+        <mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="cam" target="fusion">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="140" y="210" />
+              <mxPoint x="290" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="v2i" target="fusion">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="450" y="210" />
+              <mxPoint x="355" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="e2" target="control">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="ETA hasta 8 s" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="fusion" target="control">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="Posiciones y detecciones proceden de SUMO. No se procesan imágenes ni mensajes radio reales." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="414" width="870" height="18" />
+        </mxCell>
+        <mxCell id="n1" value="La clasificación no cambia el peso del vehículo; un objeto sin clasificar sigue contando." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="430" width="870" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

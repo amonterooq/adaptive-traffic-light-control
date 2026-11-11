@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="450" viewBox="0 0 940 450">
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#42675f"/></marker></defs>
+<rect width="940" height="450" fill="white"/>
+<rect x="12" y="8" width="916" height="35" rx="8" fill="#ffffff" stroke="#8aa99d"/>
+<text x="470.0" y="30.833333333333332" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Fase peatonal exclusiva y despeje supervisado</text>
+<rect x="20" y="80" width="240" height="65" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="140.0" y="108.83333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Verde vehicular</text>
+<text x="140.0" y="126.83333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Respetar mínimo</text>
+<rect x="350" y="80" width="240" height="65" rx="8" fill="#f8eedc" stroke="#8aa99d"/>
+<text x="470.0" y="108.83333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Amarillo vehicular</text>
+<text x="470.0" y="126.83333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">3 segundos</text>
+<rect x="680" y="80" width="240" height="65" rx="8" fill="#f3f5f1" stroke="#8aa99d"/>
+<text x="800.0" y="108.83333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Todo-rojo</text>
+<text x="800.0" y="126.83333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Al menos 2 s</text>
+<rect x="680" y="260" width="240" height="75" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="800.0" y="293.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Admisión peatonal</text>
+<text x="800.0" y="311.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">10 s; vehículos en rojo</text>
+<rect x="350" y="260" width="240" height="75" rx="8" fill="#f8eedc" stroke="#8aa99d"/>
+<text x="470.0" y="293.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Despeje peatonal</text>
+<text x="470.0" y="311.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Al menos 15 s; todo-rojo</text>
+<rect x="20" y="260" width="240" height="75" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="140.0" y="293.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Verde del eje opuesto</text>
+<text x="140.0" y="311.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Solo con pasos vacíos</text>
+<path d="M260,112.5 L350,112.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="305.0" y="105.5" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">Fin / petición</text>
+<path d="M590,112.5 L680,112.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M800.0,145 L800.0,260" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="800.0" y="195.5" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">Sin vehículos internos</text>
+<path d="M680,297.5 L590,297.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="635.0" y="290.5" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">Fin de admisión</text>
+<path d="M350,297.5 L260,297.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="305.0" y="290.5" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">Despeje cumplido</text>
+<text x="470.0" y="416" text-anchor="middle" font-family="Arial" font-size="12" fill="#23473e" font-weight="normal">El fijo reserva el servicio después de E/O. El adaptativo lo omite si no hay solicitud.</text>
+<text x="470.0" y="432" text-anchor="middle" font-family="Arial" font-size="12" fill="#23473e" font-weight="normal">Si queda una persona en un paso, el despeje se prolonga y no se autoriza verde vehicular.</text>
+</svg>

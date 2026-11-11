@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+testpaths = ["programa/tests"]
+markers = ["integration: ejecuta el binario SUMO instalado"]
+
+[tool.ruff]
+line-length = 120
+exclude = ["memoria", "datos"]
+
+[tool.ruff.lint]
+select = ["F"]

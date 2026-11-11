@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Fase peatonal exclusiva y despeje supervisado" id="fase_peatonal">
+    <mxGraphModel pageWidth="940" pageHeight="450">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Fase peatonal exclusiva y despeje supervisado" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="916" height="35" />
+        </mxCell>
+        <mxCell id="g" value="Verde vehicular&#10;Respetar mínimo" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="80" width="240" height="65" />
+        </mxCell>
+        <mxCell id="y" value="Amarillo vehicular&#10;3 segundos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="350" y="80" width="240" height="65" />
+        </mxCell>
+        <mxCell id="r" value="Todo-rojo&#10;Al menos 2 s" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="680" y="80" width="240" height="65" />
+        </mxCell>
+        <mxCell id="walk" value="Admisión peatonal&#10;10 s; vehículos en rojo" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="680" y="260" width="240" height="75" />
+        </mxCell>
+        <mxCell id="clear" value="Despeje peatonal&#10;Al menos 15 s; todo-rojo" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="350" y="260" width="240" height="75" />
+        </mxCell>
+        <mxCell id="next" value="Verde del eje opuesto&#10;Solo con pasos vacíos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="260" width="240" height="75" />
+        </mxCell>
+        <mxCell id="e0" value="Fin / petición" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="g" target="y">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="y" target="r">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="Sin vehículos internos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="r" target="walk">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="Fin de admisión" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="walk" target="clear">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="Despeje cumplido" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="clear" target="next">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="El fijo reserva el servicio después de E/O. El adaptativo lo omite si no hay solicitud." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="404" width="910" height="18" />
+        </mxCell>
+        <mxCell id="n1" value="Si queda una persona en un paso, el despeje se prolonga y no se autoriza verde vehicular." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="420" width="910" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,82 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+
+(async()=>{
+  const base=process.env.ITS_URL||'http://127.0.0.1:8765';
+  const output=process.env.ITS_SCREENSHOTS||path.resolve('documentacion/capturas');
+  fs.mkdirSync(output,{recursive:true});
+  const browser=await chromium.launch({headless:true,channel:process.env.ITS_BROWSER||undefined});
+  const page=await browser.newPage({viewport:{width:1440,height:1100}}),checks=[],errors=[];
+  page.on('pageerror',error=>errors.push(String(error)));
+  const check=(name,condition)=>{assert.ok(condition,name);checks.push(name);};
+  try{
+    await page.goto(base);
+    await page.waitForFunction(()=>window.sceneView?.geometry?.location==='lusitania');
+    await page.waitForSelector('#laboratory-card #point-laboratorio');
+    check('imagen suministrada cargada en cabecera',await page.locator('.brand-image').evaluate(image=>image.complete&&image.naturalWidth>0));
+    const image=await(await page.request.get(base+'/web/assets/acueducto-merida.png')).body();
+    check('imagen servida sin alteraciones',image.equals(fs.readFileSync('programa/web/assets/acueducto-merida.png')));
+    check('solo dos lugares de Mérida y laboratorio separado',await page.locator('#point-cards .point-card').count()===2&&await page.locator('#laboratory-card .point-card').count()===1);
+    await page.screenshot({path:path.join(output,'inicio_co2.png'),fullPage:false});
+    await page.locator('.scene-card').screenshot({path:path.join(output,'cruce_lusitania_detalle.png')});
+    await page.locator('#point-santa_eulalia button').click();
+    await page.waitForFunction(()=>window.sceneView.geometry?.location==='santa_eulalia');
+    await page.locator('.scene-card').screenshot({path:path.join(output,'cruce_reina_sofia_detalle.png')});
+    await page.locator('#point-lusitania button').click();
+    await page.waitForFunction(()=>window.sceneView.geometry?.location==='lusitania');
+    await page.locator('#pedestrian-profile').selectOption('sin');
+    await page.locator('#speed').selectOption('10');await page.locator('#start').click();
+    await page.waitForFunction(()=>window.sceneView.agents.some(agent=>agent.kind==='vehicle'),null,{timeout:30000});
+    await page.locator('#pause').click();await page.waitForFunction(()=>window.sceneView.paused);
+    await page.locator('#scene-wide').click();
+    await page.locator('#traffic-scene').scrollIntoViewIfNeeded();
+    await page.evaluate(()=>new Promise(requestAnimationFrame));
+    const car=await page.evaluate(()=>{
+      const scene=window.sceneView,agent=scene.agents.find(agent=>agent.kind==='vehicle');
+      const angle=agent.angle*Math.PI/180;
+      const point=scene.point(agent.x-Math.sin(angle)*agent.length/2,agent.y-Math.cos(angle)*agent.length/2);
+      const rect=scene.canvas.getBoundingClientRect();return {id:agent.id,x:rect.left+point[0],y:rect.top+point[1]};
+    });
+    await page.mouse.click(car.x,car.y);
+    check('se fija el vehículo pulsado',await page.evaluate(id=>window.sceneView.selected===id,car.id));
+    check('desfijar accesible debajo del dibujo',await page.locator('#entity-unpin').isVisible());
+    await page.locator('#scene-close').click();
+    check('cambiar encuadre conserva el vehículo fijado',await page.evaluate(id=>window.sceneView.selected===id,car.id));
+    await page.locator('#speed').selectOption('100');await page.locator('#pause').click();
+    await page.waitForFunction(()=>window.sceneView.status==='complete'&&window.sceneView.agents.length===0,null,{timeout:60000});
+    await page.waitForFunction(()=>document.querySelector('#entity-state').textContent.startsWith('Ha salido'));
+    check('al salir se conservan la ficha y el botón de desfijar',await page.locator('#entity-unpin').isVisible()&&(await page.locator('#entity-name').textContent()).includes(car.id));
+    await page.locator('#entity-info').screenshot({path:path.join(output,'vehiculo_fuera_de_escena.png')});
+    await page.locator('#entity-unpin').click();
+    check('desfijar elimina la selección ausente',await page.locator('#entity-info').isHidden()&&await page.evaluate(()=>window.sceneView.selected===null));
+
+    const completed=await(await page.request.get(base+'/api/state')).json();
+    const validReport=await page.request.get(`${base}/api/runs/${completed.id}/diagnostico?descargar=true`);
+    check('informe real descargable y coherente con finalización',validReport.ok()&&validReport.headers()['content-disposition'].includes('attachment')&&(await validReport.json()).apto_comparacion);
+
+    const config={location:'santa_eulalia',scenario:'escolar',mode:'adaptativo',seed:101,horizon:1800};
+    const incident={id:'incidencia-interfaz',status:'failed',summary:{completed:false,collisions:4,teleports:0,ped_conflicts:0},config};
+    const report={id:incident.id,status:'failed',resumen:'El ensayo no es válido para las comparaciones.',incidencias:[{tipo:'colisiones',cantidad:4,detalle:'SUMO ha registrado 4 vehículos implicados en colisiones (conteo acumulado por paso).'}],config,recomendaciones:['Revisar las conexiones, prioridades y fases del punto indicado.'],apto_comparacion:false};
+    await page.route('**/api/state',route=>route.fulfill({json:incident}));
+    await page.route('**/api/runs/incidencia-interfaz/diagnostico*',route=>route.fulfill({json:report}));
+    await page.route('**/api/runs',route=>route.fulfill({json:[{...incident,created_at:'2026-09-25T12:00:00',scenario:'escolar',mode:'adaptativo',seed:101}]}));
+    await page.reload();
+    await page.waitForFunction(()=>document.querySelector('#notice').textContent.includes('4 vehículos implicados en colisión'));
+    check('aviso de fallo explica causa y exclusión',(await page.locator('#notice').textContent()).includes('se excluye de las comparaciones'));
+    check('causa e informe disponibles justo debajo del cruce',await page.locator('#scene-report').isVisible()&&(await page.locator('#scene-incident-message').textContent()).includes('4 vehículos'));
+    await page.locator('#scene-report').click();
+    await page.waitForFunction(()=>!document.querySelector('#report-download').hidden);
+    check('informe muestra incidencia opciones y recomendación',(await page.locator('#run-report').textContent()).includes('conteo acumulado por paso')&&(await page.locator('#report-config').textContent()).includes('30 min')&&(await page.locator('#report-recommendations').textContent()).includes('prioridades'));
+    check('enlace descarga el informe de la ejecución correcta',(await page.locator('#report-download').getAttribute('href')).endsWith('/incidencia-interfaz/diagnostico?descargar=true'));
+    await page.locator('#run-report').screenshot({path:path.join(output,'informe_incidencia.png')});
+    await page.locator('#run-report summary').click();
+    await page.getByRole('button',{name:'Ver informe',exact:true}).click();
+    check('informe recuperable desde historial',await page.locator('#run-report').evaluate(details=>details.open));
+    await page.setViewportSize({width:390,height:844});
+    check('cabecera fichas e informe caben en móvil',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+    await page.screenshot({path:path.join(output,'informe_movil.png')});
+    check('sin errores JavaScript',errors.length===0);
+    const result={passed:true,date:new Date().toISOString(),checks,errors};
+    fs.writeFileSync(path.join(output,'prueba_interfaz.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+  }finally{await browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

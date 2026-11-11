@@ -1,0 +1,10 @@
+{
+  "id": "J1",
+  "name": "Juan Carlos I · Marqués de Paterna",
+  "lat": 38.9214575,
+  "lon": -6.332157,
+  "osm_node": "1012156394",
+  "source": "https://www.openstreetmap.org/node/1012156394",
+  "geography": "Ubicación real obtenida de OpenStreetMap. La geometría SUMO es una abstracción de cuatro accesos; no reproduce los carriles, giros ni el plan semafórico real.",
+  "traffic": "Todos los vehículos, intensidades, colas, fases y resultados son simulados."
+}

@@ -1,0 +1,42 @@
+{
+  "runs": 18,
+  "seeds": [
+    101,
+    102,
+    103
+  ],
+  "horizon": 180,
+  "warmup": 30,
+  "pedestrians": "frecuente",
+  "sensing_profiles": [
+    "sensores",
+    "v2i50",
+    "v2i100"
+  ],
+  "source_sha256": {
+    "programa/its/api.py": "5288ffcbbc7ff3616d828c63794c0508186d3a4fba577da8d240005f175d05ef",
+    "programa/its/camaras.py": "8fb04184b583ce1b14862bb741a50115e0473d6f70b03f799b8c29f1e4d38641",
+    "programa/its/config.py": "033220854abb5affded7993449c3b113429ad72653f2e357bd47d9229bd27527",
+    "programa/its/controller.py": "b7e783cfb8602dbbafee7b4e82035d488759943062ae1bbb972d127ced59ee95",
+    "programa/its/cooperative.py": "944217c55c9956daf37d9fec204b0ba6a8bc8da3051df97ee13e532c965865ba",
+    "programa/its/demand.py": "9991d414d78f25cba22c03b0a333fcb19e11e52cbc19afebc7bed58c0145d086",
+    "programa/its/diagnostico.py": "6f034a030ddccdcae7f623d0d8e3483040063e9037c5a5cb26ceeb5ef2c821de",
+    "programa/its/estudios.py": "7d41af987fba09bf9c05811dac7b21ef73ad84a7c4fc572813955a2d88fc0007",
+    "programa/its/experimento.py": "1c7c540ff5fc531e09e26a10710f5427b3678d7d452b118606308f118795bdda",
+    "programa/its/locations.py": "90cde7513fc6a52c0140a39a02cc3f0e854b208d32af9fb5e982354938b9ebf7",
+    "programa/its/network.py": "e6d32e80f3b6d38409b8c59cab1e9c20b8c54ff01b9115a4bd5007eb93df283f",
+    "programa/its/pedestrians.py": "bc2ffd83700b41c3d914c979942eb2ec6a4cd30d622a77a05515f28e677c3747",
+    "programa/its/rotonda.py": "c1f21a143bc020b359c75bda5805591c430e8436a621d5cf53af91f7ab701894",
+    "programa/its/runner.py": "dc8e97c49b20b7cef01cd6897b99219473181373417ba5fc8378febf55717d09",
+    "programa/its/scene.py": "d125cdb16e38af9f07c0e896d7e3576a4374a8ab5d935c70eb53ded8a6c4acb8",
+    "programa/its/storage.py": "43a18a6a1bf1d47b52e6acc0210e7dfd5517d9a97373db71b06a950c2fe43a17",
+    "programa/its/trafico.py": "b94a5b4f884b911218b71eb0f9cebe720b8b443294d1e227a9e46eaaa98cd7ad",
+    "programa/its/__init__.py": "9c5550fe140a72e2a5257fb6edec8d93fc4b6972690f967961c73973258eeb38",
+    "simulacion/scripts/experimentos_cooperativos.py": "7f0c6bab978597ec5d845b121dc81757e2bc23f60c2e265fca5664b653e26ced",
+    "datos/entrada/contexto_merida.json": "a1091cfe9669c74a09c05025237b3c4dc8f661ecba47b44b27ed8ac92b74d469",
+    "datos/entrada/lusitania.json": "6d1424e906acd19bd1ecce233274bd0c3c046f4dbaa19b82d5181aaeab6dd8cc",
+    "datos/entrada/santa_eulalia.json": "1be141850c999366bd1c0554c6ca72c7160ca25c30a9542653e406309807a7be",
+    "datos/entrada/ubicacion.json": "567ca63fbbaa5c54342747c9a443f4164351bc5ed9a66b0e829354dbc0ed668b",
+    "simulacion/escenarios/escenarios.json": "56c89d7dc1edc8ecdf4998d6603692cbcd5689e4cbc6b44baa949bbffb9c2bd6"
+  }
+}

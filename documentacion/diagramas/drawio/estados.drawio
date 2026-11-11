@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Secuencia de fases y condiciones de cambio" id="estados">
+    <mxGraphModel pageWidth="850" pageHeight="370">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Secuencia de fases y condiciones de cambio" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="826" height="35" />
+        </mxCell>
+        <mxCell id="ng" value="Verde N/S&#10;10 a 50 s / fijo: 30 s" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="30" y="85" width="190" height="65" />
+        </mxCell>
+        <mxCell id="ny" value="Amarillo N/S&#10;3 segundos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="330" y="85" width="190" height="65" />
+        </mxCell>
+        <mxCell id="r1" value="Todo-rojo&#10;2 segundos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="85" width="190" height="65" />
+        </mxCell>
+        <mxCell id="eg" value="Verde E/O&#10;10 a 50 s / fijo: 30 s" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="245" width="190" height="65" />
+        </mxCell>
+        <mxCell id="ey" value="Amarillo E/O&#10;3 segundos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="330" y="245" width="190" height="65" />
+        </mxCell>
+        <mxCell id="r2" value="Todo-rojo&#10;2 segundos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="30" y="245" width="190" height="65" />
+        </mxCell>
+        <mxCell id="e0" value="Regla de cambio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="ng" target="ny">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="Fin de amarillo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="ny" target="r1">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="Fin de despeje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="r1" target="eg">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="Regla de cambio" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="eg" target="ey">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="Fin de amarillo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="ey" target="r2">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" value="Fin de despeje" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="r2" target="ng">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="Regla adaptativa: verde máximo, o mínimo cumplido y cola opuesta suficiente." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="324" width="820" height="18" />
+        </mxCell>
+        <mxCell id="n1" value="Una muestra con más de 5 s de antigüedad activa temporización de respaldo." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="340" width="820" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

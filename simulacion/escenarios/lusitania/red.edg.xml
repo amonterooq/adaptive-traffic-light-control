@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<edges>
+  <edge id="N_in" from="N" to="J1" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil" shape="-68.4565,93.4643 -64.0215,84.7590 -47.6675,52.6655 -40.3567,41.3888 -26.9997,27.6853 -17.9479,18.4012 -10.2473,10.5086 0.0000,0.0000" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="N_out" from="J1" to="N" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil" shape="0.0000,0.0000 -10.2473,10.5086 -17.9479,18.4012 -26.9997,27.6853 -40.3567,41.3888 -47.6675,52.6655 -64.0215,84.7590 -68.4565,93.4643" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="E_in" from="E" to="J1" numLanes="2" speed="8.33" name="Avenida Lusitania" shape="102.9623,60.1660 59.9850,38.6948 42.3490,29.8894 24.2279,20.6721 7.1289,7.3471 0.0000,0.0000" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="E_out" from="J1" to="E" numLanes="2" speed="8.33" name="Avenida Lusitania" shape="0.0000,0.0000 7.1289,7.3471 24.2279,20.6721 42.3490,29.8894 59.9850,38.6948 102.9623,60.1660" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="S_in" from="S" to="J1" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil" shape="84.6613,-85.0439 8.3416,-8.3824 0.0000,0.0000" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="S_out" from="J1" to="S" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil" shape="0.0000,0.0000 8.3416,-8.3824 84.6613,-85.0439" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="W_in" from="W" to="J1" numLanes="2" speed="8.33" name="Avenida Lusitania" shape="-82.0383,-87.5533 -80.2369,-85.7832 -74.9098,-80.7515 -40.5732,-43.8601 -11.6938,-12.6348 0.0000,0.0000" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="W_out" from="J1" to="W" numLanes="2" speed="8.33" name="Avenida Lusitania" shape="0.0000,0.0000 -11.6938,-12.6348 -40.5732,-43.8601 -74.9098,-80.7515 -80.2369,-85.7832 -82.0383,-87.5533" spreadType="right">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+</edges>

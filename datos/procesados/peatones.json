@@ -1,0 +1,132 @@
+{
+  "profiles": [
+    {
+      "profile": "sin",
+      "label": "Sin llegadas",
+      "n": 10,
+      "vehicle": {
+        "fixed_mean": 26.302147352929683,
+        "adaptive_mean": 8.102716452259676,
+        "delta_mean": -18.19943090067001,
+        "ci_low": -19.25035714117669,
+        "ci_high": -17.14850466016333
+      },
+      "pedestrian": {
+        "fixed_mean": null,
+        "adaptive_mean": null,
+        "delta_mean": null,
+        "ci_low": null,
+        "ci_high": null
+      },
+      "co2": {
+        "fixed_mean": 153.11961043093612,
+        "adaptive_mean": 125.68728105067538,
+        "delta_mean": -27.432329380260732,
+        "ci_low": -29.477853162817677,
+        "ci_high": -25.386805597703788
+      },
+      "fixed_ped_max": 0,
+      "adaptive_ped_max": 0,
+      "generated_persons_per_strategy": 0,
+      "fixed_max_request_wait": 0,
+      "adaptive_max_request_wait": 0
+    },
+    {
+      "profile": "ocasional",
+      "label": "Ocasional",
+      "n": 10,
+      "vehicle": {
+        "fixed_mean": 26.302147352929683,
+        "adaptive_mean": 67.21485904264226,
+        "delta_mean": 40.91271168971257,
+        "ci_low": 16.248995146600585,
+        "ci_high": 65.57642823282455
+      },
+      "pedestrian": {
+        "fixed_mean": 37.44769542942487,
+        "adaptive_mean": 17.105875387261037,
+        "delta_mean": -20.341820042163828,
+        "ci_low": -23.874512100024738,
+        "ci_high": -16.80912798430292
+      },
+      "co2": {
+        "fixed_mean": 153.11961043093612,
+        "adaptive_mean": 246.19449703335343,
+        "delta_mean": 93.07488660241731,
+        "ci_low": 43.018894772035175,
+        "ci_high": 143.13087843279945
+      },
+      "fixed_ped_max": 84.0,
+      "adaptive_ped_max": 47.0,
+      "generated_persons_per_strategy": 580,
+      "fixed_max_request_wait": 84,
+      "adaptive_max_request_wait": 47
+    },
+    {
+      "profile": "frecuente",
+      "label": "Frecuente",
+      "n": 10,
+      "vehicle": {
+        "fixed_mean": 26.302147352929683,
+        "adaptive_mean": 125.6717837564509,
+        "delta_mean": 99.36963640352123,
+        "ci_low": 80.95457284112243,
+        "ci_high": 117.78469996592003
+      },
+      "pedestrian": {
+        "fixed_mean": 36.38408859272846,
+        "adaptive_mean": 18.223764920183413,
+        "delta_mean": -18.160323672545047,
+        "ci_low": -18.844710775005517,
+        "ci_high": -17.475936570084578
+      },
+      "co2": {
+        "fixed_mean": 153.11961043093612,
+        "adaptive_mean": 357.1030568694598,
+        "delta_mean": 203.9834464385237,
+        "ci_low": 169.74284391613563,
+        "ci_high": 238.2240489609118
+      },
+      "fixed_ped_max": 84.0,
+      "adaptive_ped_max": 51.0,
+      "generated_persons_per_strategy": 3616,
+      "fixed_max_request_wait": 84,
+      "adaptive_max_request_wait": 51
+    },
+    {
+      "profile": "lento",
+      "label": "Marcha lenta",
+      "n": 10,
+      "vehicle": {
+        "fixed_mean": 26.302147352929683,
+        "adaptive_mean": 127.01954369987988,
+        "delta_mean": 100.71739634695018,
+        "ci_low": 80.83783211022299,
+        "ci_high": 120.59696058367737
+      },
+      "pedestrian": {
+        "fixed_mean": 37.038748559313746,
+        "adaptive_mean": 18.60587767071923,
+        "delta_mean": -18.43287088859451,
+        "ci_low": -19.37316689911104,
+        "ci_high": -17.49257487807798
+      },
+      "co2": {
+        "fixed_mean": 153.11961043093612,
+        "adaptive_mean": 358.96617970207615,
+        "delta_mean": 205.84656927114,
+        "ci_low": 169.76826294348172,
+        "ci_high": 241.92487559879828
+      },
+      "fixed_ped_max": 85.0,
+      "adaptive_ped_max": 51.0,
+      "generated_persons_per_strategy": 3616,
+      "fixed_max_request_wait": 86,
+      "adaptive_max_request_wait": 51
+    }
+  ],
+  "runs": 80,
+  "persons": 15624,
+  "conflicts": 0,
+  "method": "Mean of paired run means; Student 95% CI, df=9; no multiplicity adjustment."
+}

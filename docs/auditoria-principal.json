@@ -1,0 +1,14 @@
+{
+  "batteries": {
+    "principal": 100,
+    "sensibilidad_g20": 30,
+    "sensibilidad_g40": 30,
+    "fallo_muestras": 6,
+    "peatones": 80
+  },
+  "runs": 246,
+  "vehicles": 226674,
+  "persons": 15624,
+  "paired_demands": 123,
+  "passed": true
+}

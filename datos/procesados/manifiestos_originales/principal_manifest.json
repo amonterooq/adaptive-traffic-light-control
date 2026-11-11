@@ -1,0 +1,162 @@
+{
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110
+  ],
+  "scenarios": [
+    "bajo",
+    "medio",
+    "alto",
+    "desequilibrado",
+    "dinamico"
+  ],
+  "config": {
+    "description": "Demanda sint\u00e9tica por acceso (veh/h), sin aforos de M\u00e9rida. N/S y E/W son ejes abstractos.",
+    "duration": 1800,
+    "warmup": 300,
+    "max_drain": 1800,
+    "seeds": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110
+    ],
+    "scenarios": {
+      "bajo": {
+        "label": "Demanda baja",
+        "segments": [
+          {
+            "begin": 0,
+            "end": 1800,
+            "rates": [
+              120,
+              120,
+              120,
+              120
+            ]
+          }
+        ]
+      },
+      "medio": {
+        "label": "Demanda media",
+        "segments": [
+          {
+            "begin": 0,
+            "end": 1800,
+            "rates": [
+              450,
+              450,
+              450,
+              450
+            ]
+          }
+        ]
+      },
+      "alto": {
+        "label": "Demanda alta",
+        "segments": [
+          {
+            "begin": 0,
+            "end": 1800,
+            "rates": [
+              850,
+              850,
+              850,
+              850
+            ]
+          }
+        ]
+      },
+      "desequilibrado": {
+        "label": "Demanda desigual",
+        "segments": [
+          {
+            "begin": 0,
+            "end": 1800,
+            "rates": [
+              850,
+              150,
+              850,
+              150
+            ]
+          }
+        ]
+      },
+      "dinamico": {
+        "label": "Demanda cambiante",
+        "segments": [
+          {
+            "begin": 0,
+            "end": 600,
+            "rates": [
+              700,
+              200,
+              700,
+              200
+            ]
+          },
+          {
+            "begin": 600,
+            "end": 1200,
+            "rates": [
+              200,
+              700,
+              200,
+              700
+            ]
+          },
+          {
+            "begin": 1200,
+            "end": 1800,
+            "rates": [
+              550,
+              550,
+              550,
+              550
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "source_sha256": {
+    "programa/its/api.py": "5288ffcbbc7ff3616d828c63794c0508186d3a4fba577da8d240005f175d05ef",
+    "programa/its/camaras.py": "8fb04184b583ce1b14862bb741a50115e0473d6f70b03f799b8c29f1e4d38641",
+    "programa/its/config.py": "033220854abb5affded7993449c3b113429ad72653f2e357bd47d9229bd27527",
+    "programa/its/controller.py": "b7e783cfb8602dbbafee7b4e82035d488759943062ae1bbb972d127ced59ee95",
+    "programa/its/cooperative.py": "944217c55c9956daf37d9fec204b0ba6a8bc8da3051df97ee13e532c965865ba",
+    "programa/its/demand.py": "9991d414d78f25cba22c03b0a333fcb19e11e52cbc19afebc7bed58c0145d086",
+    "programa/its/diagnostico.py": "6f034a030ddccdcae7f623d0d8e3483040063e9037c5a5cb26ceeb5ef2c821de",
+    "programa/its/estudios.py": "7d41af987fba09bf9c05811dac7b21ef73ad84a7c4fc572813955a2d88fc0007",
+    "programa/its/experimento.py": "1c7c540ff5fc531e09e26a10710f5427b3678d7d452b118606308f118795bdda",
+    "programa/its/locations.py": "90cde7513fc6a52c0140a39a02cc3f0e854b208d32af9fb5e982354938b9ebf7",
+    "programa/its/network.py": "e6d32e80f3b6d38409b8c59cab1e9c20b8c54ff01b9115a4bd5007eb93df283f",
+    "programa/its/pedestrians.py": "bc2ffd83700b41c3d914c979942eb2ec6a4cd30d622a77a05515f28e677c3747",
+    "programa/its/rotonda.py": "c1f21a143bc020b359c75bda5805591c430e8436a621d5cf53af91f7ab701894",
+    "programa/its/runner.py": "dc8e97c49b20b7cef01cd6897b99219473181373417ba5fc8378febf55717d09",
+    "programa/its/scene.py": "d125cdb16e38af9f07c0e896d7e3576a4374a8ab5d935c70eb53ded8a6c4acb8",
+    "programa/its/storage.py": "43a18a6a1bf1d47b52e6acc0210e7dfd5517d9a97373db71b06a950c2fe43a17",
+    "programa/its/trafico.py": "b94a5b4f884b911218b71eb0f9cebe720b8b443294d1e227a9e46eaaa98cd7ad",
+    "programa/its/__init__.py": "9c5550fe140a72e2a5257fb6edec8d93fc4b6972690f967961c73973258eeb38",
+    "simulacion/escenarios/escenarios.json": "56c89d7dc1edc8ecdf4998d6603692cbcd5689e4cbc6b44baa949bbffb9c2bd6"
+  },
+  "fixed_green": 30,
+  "blackout": null,
+  "pedestrian_profiles": [
+    "desactivado"
+  ]
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="460" viewBox="0 0 900 460">
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#42675f"/></marker></defs>
+<rect width="900" height="460" fill="white"/>
+<rect x="12" y="8" width="876" height="35" rx="8" fill="#ffffff" stroke="#8aa99d"/>
+<text x="450.0" y="30.833333333333332" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Vehículos conectados y detección desde la infraestructura</text>
+<rect x="25" y="85" width="230" height="80" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="140.0" y="104.5" text-anchor="middle" font-family="Arial" font-size="15.0" fill="#23473e" font-weight="bold">Cámara emulada</text>
+<text x="140.0" y="121.5" text-anchor="middle" font-family="Arial" font-size="15.0" fill="#23473e" font-weight="normal">Tipo, posición y velocidad</text>
+<text x="140.0" y="138.5" text-anchor="middle" font-family="Arial" font-size="15.0" fill="#23473e" font-weight="normal">Con omisiones</text>
+<text x="140.0" y="155.5" text-anchor="middle" font-family="Arial" font-size="15.0" fill="#23473e" font-weight="normal">configurables</text>
+<rect x="335" y="85" width="230" height="80" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="450.0" y="101.66666666666666" text-anchor="middle" font-family="Arial" font-size="11.6" fill="#23473e" font-weight="bold">Avisos V2I</text>
+<text x="450.0" y="115.26666666666665" text-anchor="middle" font-family="Arial" font-size="11.6" fill="#23473e" font-weight="normal">Fracción de coches y</text>
+<text x="450.0" y="128.86666666666667" text-anchor="middle" font-family="Arial" font-size="11.6" fill="#23473e" font-weight="normal">motos</text>
+<text x="450.0" y="142.46666666666667" text-anchor="middle" font-family="Arial" font-size="11.6" fill="#23473e" font-weight="normal">Distancia, velocidad e</text>
+<text x="450.0" y="156.06666666666666" text-anchor="middle" font-family="Arial" font-size="11.6" fill="#23473e" font-weight="normal">instante</text>
+<rect x="645" y="85" width="230" height="80" rx="8" fill="#f8eedc" stroke="#8aa99d"/>
+<text x="760.0" y="112.33333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Sensores del cruce</text>
+<text x="760.0" y="130.33333333333334" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Colas E2 y peatones</text>
+<text x="760.0" y="148.33333333333334" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Disponibles sin V2I</text>
+<rect x="180" y="255" width="265" height="75" rx="8" fill="#e8f2ec" stroke="#8aa99d"/>
+<text x="312.5" y="279.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Fusión por identificador</text>
+<text x="312.5" y="297.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Una aproximación por vehículo</text>
+<text x="312.5" y="315.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">ETA con velocidad observada</text>
+<rect x="605" y="255" width="265" height="75" rx="8" fill="#f3f5f1" stroke="#8aa99d"/>
+<text x="737.5" y="279.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="bold">Control local</text>
+<text x="737.5" y="297.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Colas y próximas llegadas</text>
+<text x="737.5" y="315.8333333333333" text-anchor="middle" font-family="Arial" font-size="16" fill="#23473e" font-weight="normal">Fases y despeje peatonal</text>
+<path d="M140,165 L140,210 L290,210 L290,255" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M450,165 L450,210 L355,210 L355,255" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M760.0,165 L737.5,255" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M445,292.5 L605,292.5" fill="none" stroke="#42675f" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="525.0" y="285.5" text-anchor="middle" font-family="Arial" font-size="13" fill="#23473e" font-weight="normal">ETA hasta 8 s</text>
+<text x="450.0" y="426" text-anchor="middle" font-family="Arial" font-size="12" fill="#23473e" font-weight="normal">Posiciones y detecciones proceden de SUMO. No se procesan imágenes ni mensajes radio reales.</text>
+<text x="450.0" y="442" text-anchor="middle" font-family="Arial" font-size="12" fill="#23473e" font-weight="normal">La clasificación no cambia el peso del vehículo; un objeto sin clasificar sigue contando.</text>
+</svg>

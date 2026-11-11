@@ -1,0 +1,4 @@
+# No normalizar los archivos originales: sus bytes forman parte de los manifiestos científicos.
+* -text
+*.png binary
+*.pdf binary

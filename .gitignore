@@ -1,0 +1,34 @@
+# Entornos, cachés y herramientas
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+node_modules/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+# Secretos y estado local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.sqlite*
+*.db
+*.db-*
+# Salidas de simulaciones, auditorías temporales y distribuciones
+datos/sesiones/
+datos/resultados/
+datos/diagnostico/
+tmp/
+*.log
+*.tmp
+*.bak
+*.zip
+dist/
+build/

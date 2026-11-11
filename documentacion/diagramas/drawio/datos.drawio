@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Modelo relacional implementado en SQLite, versión 4" id="datos">
+    <mxGraphModel pageWidth="980" pageHeight="470">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Modelo relacional implementado en SQLite, versión 4" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="956" height="35" />
+        </mxCell>
+        <mxCell id="runs" value="runs&#10;PK id&#10;scenario, mode, seed&#10;created_at, status&#10;config_json, summary_json" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="25" y="75" width="235" height="165" />
+        </mxCell>
+        <mxCell id="samples" value="samples&#10;PK (run_id, t)&#10;FK run_id -&gt; runs.id&#10;q_n, q_e, q_s, q_w&#10;state, fallback&#10;arrived, in_network" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="375" y="75" width="240" height="165" />
+        </mxCell>
+        <mxCell id="peds" value="pedestrian_samples&#10;PK/FK (run_id, t)&#10;ped_signal, ped_waiting&#10;ped_crossing, ped_stage" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="720" y="75" width="235" height="165" />
+        </mxCell>
+        <mxCell id="coop" value="cooperative_samples&#10;PK/FK (run_id, t)&#10;payload_json: V2I y cámara" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="375" y="310" width="240" height="95" />
+        </mxCell>
+        <mxCell id="e0" value="1 a N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="runs" target="samples">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="1 a 0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="samples" target="peds">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="1 a 0..1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="samples" target="coop">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="Las tablas adicionales conservan las sesiones previas; los viajes completos quedan en CSV/XML." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="440" width="950" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

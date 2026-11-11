@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Propuesta de campo: telemetría y control local" id="red_campo">
+    <mxGraphModel pageWidth="940" pageHeight="460">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Propuesta de campo: telemetría y control local" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="916" height="35" />
+        </mxCell>
+        <mxCell id="node" value="Nodo de bajo&#10;consumo&#10;Conteos agregados" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="85" width="180" height="70" />
+        </mxCell>
+        <mxCell id="gw" value="Pasarela LoRaWAN&#10;Transporte IP" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="290" y="85" width="180" height="70" />
+        </mxCell>
+        <mxCell id="lns" value="Servidor de red&#10;Integración de&#10;datos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="560" y="85" width="170" height="70" />
+        </mxCell>
+        <mxCell id="app" value="Backend / API&#10;Históricos y&#10;alarmas" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="560" y="290" width="170" height="80" />
+        </mxCell>
+        <mxCell id="local" value="Controlador local&#10;Solicitud y&#10;ocupación&#10;Temporización de&#10;fases" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f8eedc;strokeColor=#8aa99d;fontColor=#23473e;fontSize=11.6;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="290" width="180" height="80" />
+        </mxCell>
+        <mxCell id="web" value="Supervisión&#10;Navegador" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="790" y="290" width="130" height="80" />
+        </mxCell>
+        <mxCell id="e0" value="Radio LoRaWAN" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="node" target="gw">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="IP / TLS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="gw" target="lns">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="Datos normalizados" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="lns" target="app">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="Red municipal / acceso IP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="local" target="app">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="app" target="web">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="Arquitectura conceptual de campo: adquisición distribuida y control local." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="414" width="910" height="18" />
+        </mxCell>
+        <mxCell id="n1" value="El control local no depende de recibir cada segundo un resumen remoto de telemetría." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="430" width="910" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

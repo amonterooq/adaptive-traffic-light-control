@@ -1,0 +1,15 @@
+{
+  "scope": "Archivos seleccionados; búsqueda estática por patrones. No equivale a una auditoría exhaustiva de seguridad. No se hereda historial Git.",
+  "findings": [
+    {
+      "file": "docs/VALIDACION.md",
+      "pattern": "personal_path",
+      "review": "Literal ficticio de prueba, sin datos privados"
+    },
+    {
+      "file": "programa/tests/test_diagnostico.py",
+      "pattern": "personal_path",
+      "review": "Literal ficticio de prueba, sin datos privados"
+    }
+  ]
+}

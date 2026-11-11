@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Modelo de intersección usado en los experimentos" id="escenario">
+    <mxGraphModel pageWidth="620" pageHeight="530">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Modelo de intersección usado en los experimentos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="596" height="35" />
+        </mxCell>
+        <mxCell id="n" value="Norte&#10;Entrada y salida: 300&#10;m" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.666666666666668;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="220" y="65" width="180" height="65" />
+        </mxCell>
+        <mxCell id="e" value="Este&#10;300 m" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="410" y="225" width="180" height="65" />
+        </mxCell>
+        <mxCell id="s" value="Sur&#10;Entrada y salida: 300&#10;m" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.666666666666668;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="220" y="385" width="180" height="65" />
+        </mxCell>
+        <mxCell id="w" value="Oeste&#10;300 m" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="30" y="225" width="180" height="65" />
+        </mxCell>
+        <mxCell id="j" value="J1&#10;Dos ejes" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="230" width="130" height="55" />
+        </mxCell>
+        <mxCell id="e0" value="N/S" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="n" target="j">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="j" target="s">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="E/O" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="w" target="j">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="j" target="e">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="n0" value="Un carril por sentido, movimientos rectos y detectores en los accesos." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="484" width="590" height="18" />
+        </mxCell>
+        <mxCell id="n1" value="La ubicación geográfica es real; esta geometría y sus parámetros son sintéticos." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="500" width="590" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

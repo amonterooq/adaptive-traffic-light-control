@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Un paso de simulación y su consulta desde el navegador" id="secuencia">
+    <mxGraphModel pageWidth="900" pageHeight="440">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Un paso de simulación y su consulta desde el navegador" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="12" y="8" width="876" height="35" />
+        </mxCell>
+        <mxCell id="a" value="1. Leer detectores&#10;E2 y personas mediante TraCI" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="75" width="250" height="65" />
+        </mxCell>
+        <mxCell id="b" value="2. Validar observación&#10;Colas + V2I + cámara" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="325" y="75" width="250" height="65" />
+        </mxCell>
+        <mxCell id="c" value="3. Decidir fase&#10;Reglas + máquina de estados" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="75" width="250" height="65" />
+        </mxCell>
+        <mxCell id="d" value="4. Aplicar y avanzar&#10;TraCI: estado y&#10;simulationStep" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#e8f2ec;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.666666666666668;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="255" width="250" height="65" />
+        </mxCell>
+        <mxCell id="e" value="5. Registrar muestra&#10;CSV / SQLite en sesión web" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="325" y="255" width="250" height="65" />
+        </mxCell>
+        <mxCell id="f" value="6. Actualizar pantalla&#10;Estado: 500 ms reales&#10;Escena activa: 100 ms reales" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#f3f5f1;strokeColor=#8aa99d;fontColor=#23473e;fontSize=15.666666666666668;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="20" y="255" width="250" height="65" />
+        </mxCell>
+        <mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="a" target="b">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="b" target="c">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="c" target="d">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="d" target="e">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="e" target="f">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" value="Siguiente segundo simulado" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#42675f;" edge="1" parent="1" source="d" target="a">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="755" y="375" />
+              <mxPoint x="8" y="375" />
+              <mxPoint x="8" y="185" />
+              <mxPoint x="145" y="185" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n0" value="El reloj simulado y el reloj del navegador son distintos; las métricas usan tiempo simulado." style="text;html=0;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="15" y="410" width="870" height="18" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<edges>
+  <edge from="R0" to="R1" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_0" />
+  <edge from="R1" to="R2" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_1" />
+  <edge from="R2" to="R3" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_2" />
+  <edge from="R3" to="R4" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_3" />
+  <edge from="R4" to="R5" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_4" />
+  <edge from="R5" to="R6" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_5" />
+  <edge from="R6" to="R7" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_6" />
+  <edge from="R7" to="R8" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_7" />
+  <edge from="R8" to="R9" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_8" />
+  <edge from="R9" to="R10" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_9" />
+  <edge from="R10" to="R11" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_10" />
+  <edge from="R11" to="R12" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_11" />
+  <edge from="R12" to="R13" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_12" />
+  <edge from="R13" to="R14" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_13" />
+  <edge from="R14" to="R15" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_14" />
+  <edge from="R15" to="R16" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_15" />
+  <edge from="R16" to="R17" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_16" />
+  <edge from="R17" to="R18" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_17" />
+  <edge from="R18" to="R19" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_18" />
+  <edge from="R19" to="R20" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_19" />
+  <edge from="R20" to="R21" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_20" />
+  <edge from="R21" to="R22" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_21" />
+  <edge from="R22" to="R23" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_22" />
+  <edge from="R23" to="R24" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_23" />
+  <edge from="R24" to="R25" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_24" />
+  <edge from="R25" to="R0" priority="10" numLanes="1" speed="5.56" disallow="pedestrian" width="4" id="ring_25" />
+  <edge id="N_in" from="N" to="G_N" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Machado">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="N_out" from="G_N" to="N" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Machado">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="N_link_in" from="G_N" to="R20" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Machado">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="N_link_out" from="R17" to="G_N" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Machado">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="E_in" from="E" to="G_E" priority="1" numLanes="2" speed="8.33" name="Avenida Reina Sofía · noreste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="E_out" from="G_E" to="E" priority="1" numLanes="2" speed="8.33" name="Avenida Reina Sofía · noreste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="E_link_in" from="G_E" to="R16" priority="1" numLanes="1" speed="8.33" name="Avenida Reina Sofía · noreste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="E_link_out" from="R13" to="G_E" priority="1" numLanes="1" speed="8.33" name="Avenida Reina Sofía · noreste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="S_in" from="S" to="G_S" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="S_out" from="G_S" to="S" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="S_link_in" from="G_S" to="R8" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="S_link_out" from="R4" to="G_S" priority="1" numLanes="1" speed="8.33" name="Calle Antonio Hernández Gil">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="W_in" from="W" to="G_W" priority="1" numLanes="2" speed="8.33" name="Avenida Reina Sofía · suroeste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="W_out" from="G_W" to="W" priority="1" numLanes="2" speed="8.33" name="Avenida Reina Sofía · suroeste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+    <lane index="1" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="W_link_in" from="G_W" to="R3" priority="1" numLanes="1" speed="8.33" name="Avenida Reina Sofía · suroeste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="W_link_out" from="R0" to="G_W" priority="1" numLanes="1" speed="8.33" name="Avenida Reina Sofía · suroeste">
+    <lane index="0" disallow="pedestrian" width="3.2" />
+  </edge>
+  <edge id="D_out" from="R10" to="D" numLanes="1" speed="8.33" disallow="pedestrian" name="Calle Don Benito" />
+</edges>

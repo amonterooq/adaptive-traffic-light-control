@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "runs": 18,
+  "paired_groups": 6,
+  "vehicles": 1692,
+  "persons": 618,
+  "collisions": 0,
+  "teleports": 0,
+  "pedestrian_conflicts": 0,
+  "all_source_hashes_match": true
+}

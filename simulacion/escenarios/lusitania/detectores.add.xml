@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<additional>
+  <laneAreaDetector id="det_N_0" lane="N_in_0" pos="0" endPos="-0.1" timeThreshold="1" speedThreshold="0.1" jamThreshold="10" period="60" file="NUL" />
+  <laneAreaDetector id="det_E_0" lane="E_in_0" pos="0" endPos="-0.1" timeThreshold="1" speedThreshold="0.1" jamThreshold="10" period="60" file="NUL" />
+  <laneAreaDetector id="det_E_1" lane="E_in_1" pos="0" endPos="-0.1" timeThreshold="1" speedThreshold="0.1" jamThreshold="10" period="60" file="NUL" />
+  <laneAreaDetector id="det_S_0" lane="S_in_0" pos="0" endPos="-0.1" timeThreshold="1" speedThreshold="0.1" jamThreshold="10" period="60" file="NUL" />
+  <laneAreaDetector id="det_W_0" lane="W_in_0" pos="0" endPos="-0.1" timeThreshold="1" speedThreshold="0.1" jamThreshold="10" period="60" file="NUL" />
+  <laneAreaDetector id="det_W_1" lane="W_in_1" pos="0" endPos="-0.1" timeThreshold="1" speedThreshold="0.1" jamThreshold="10" period="60" file="NUL" />
+</additional>

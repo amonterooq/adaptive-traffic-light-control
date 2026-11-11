@@ -1,0 +1,22 @@
+{
+  "population": {
+    "source": "https://www.ine.es/consul/serie.do?d=true&nult=15&s=6-2158",
+    "series": "DPOP2158",
+    "municipality": "Mérida, Badajoz, Extremadura",
+    "values": {
+      "2020": 59548,
+      "2021": 59424,
+      "2022": 59324,
+      "2023": 59461,
+      "2024": 59857,
+      "2025": 60225
+    }
+  },
+  "pmus": {
+    "source": "https://descargas.merida.es/trafico/2026-pmus-definitivo.pdf",
+    "table": 14,
+    "pdf_page": 70,
+    "note": "Contexto municipal; no usado como demanda de los escenarios."
+  },
+  "consulted": "2026-09-18"
+}

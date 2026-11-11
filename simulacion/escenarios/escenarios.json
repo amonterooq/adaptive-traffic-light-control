@@ -1,0 +1,14 @@
+{
+  "description": "Demanda sintética por acceso (veh/h), sin aforos de Mérida. N/S y E/W son ejes abstractos.",
+  "duration": 1800,
+  "warmup": 300,
+  "max_drain": 1800,
+  "seeds": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
+  "scenarios": {
+    "bajo": {"label": "Demanda baja", "segments": [{"begin": 0, "end": 1800, "rates": [120, 120, 120, 120]}]},
+    "medio": {"label": "Demanda media", "segments": [{"begin": 0, "end": 1800, "rates": [450, 450, 450, 450]}]},
+    "alto": {"label": "Demanda alta", "segments": [{"begin": 0, "end": 1800, "rates": [850, 850, 850, 850]}]},
+    "desequilibrado": {"label": "Demanda desigual", "segments": [{"begin": 0, "end": 1800, "rates": [850, 150, 850, 150]}]},
+    "dinamico": {"label": "Demanda cambiante", "segments": [{"begin": 0, "end": 600, "rates": [700, 200, 700, 200]}, {"begin": 600, "end": 1200, "rates": [200, 700, 200, 700]}, {"begin": 1200, "end": 1800, "rates": [550, 550, 550, 550]}]}
+  }
+}

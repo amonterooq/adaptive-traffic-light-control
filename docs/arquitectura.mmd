@@ -1,0 +1,19 @@
+flowchart LR
+    UI[Interfaz web HTML CSS JavaScript]
+    API[FastAPI y gestor de ejecuciones]
+    RUN[Orquestador Python]
+    SUMO[SUMO: vehículos y peatones]
+    OBS[Detectores virtuales, cámara y V2I emulados]
+    CTRL[Control fijo o adaptativo]
+    DB[(SQLite: sesiones y muestras)]
+    FILES[CSV y JSON: experimentos y agregados]
+    UI <-->|HTTP y JSON en localhost| API
+    API -->|Hilo de simulación| RUN
+    RUN <-->|TraCI sobre TCP| SUMO
+    RUN --> OBS
+    OBS --> CTRL
+    CTRL -->|Estado semafórico| RUN
+    RUN -->|Muestras y resultado| API
+    API --> DB
+    RUN --> FILES
+    FILES -->|Comparaciones precalculadas| API

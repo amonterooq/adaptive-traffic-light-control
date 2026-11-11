@@ -1,0 +1,25 @@
+{
+  "http": {
+    "/": 200,
+    "/api/health": 200,
+    "/openapi.json": 200,
+    "/api/config": 200,
+    "/api/studies": 200,
+    "/api/scene/network": 200,
+    "/api/results": 200,
+    "/api/results/pedestrians": 200,
+    "/api/results/mixed": 200,
+    "/api/map": 200,
+    "/web/app.js": 200,
+    "/web/style.css": 200,
+    "/web/assets/acueducto-merida.png": 200
+  },
+  "browser": {
+    "browser.cjs": 0,
+    "browser_lusitania.cjs": 0,
+    "browser_cooperative.cjs": 0,
+    "browser_mixto.cjs": 0,
+    "browser_estudios.cjs": 0,
+    "browser_interfaz.cjs": 0
+  }
+}
