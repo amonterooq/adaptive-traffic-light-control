@@ -67,7 +67,7 @@ def informe(row):
             recomendaciones.append('La red no se ha vaciado dentro del tiempo máximo; revisar demanda y capacidad antes de comparar resultados.')
     if summary.get('error'):
         incluir(summary['error_code'], None, summary['error'])
-        recomendaciones.append('Consultar la instalación y los pasos de ejecución de README.txt; conservar este informe para reproducir el fallo.')
+        recomendaciones.append('Consultar la instalación y los pasos de ejecución de README.md; conservar este informe para reproducir el fallo.')
     if status == 'cancelled':
         incluir('cancelacion', None, 'La ejecución se ha detenido desde la aplicación antes de finalizar.')
         recomendaciones.append('Repetir el estudio y dejar que finalice para obtener resultados comparables.')
