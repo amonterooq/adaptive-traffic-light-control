@@ -85,7 +85,8 @@ def test_geographic_sensing_cooperates_and_completes(tmp_path,location,profile,m
         assert result['ped_generated']==result['ped_arrived'] and result['ped_conflicts']==0
         for f in frames:
             assert sum(f['sample']['ped_wait_'+a] for a in 'NESW')==f['sample']['ped_waiting']
-            if f['sample']['ped_crossing']:assert f['sample']['state']=='rrrr'
+            assert f['sample']['ped_conflict']==0
+            assert f['sample']['state'].count('G')<=1
 
 
 @pytest.mark.integration
@@ -110,7 +111,7 @@ def test_api_catalog_metrics_migration_and_cooperative_csv(tmp_path):
     store.start('recent',config)
     sample={'t':0,'q_N':1,'q_E':0,'q_S':0,'q_W':0,'state':'GrGr','fallback':False,'arrived':0,'in_network':2,
             'sensing_mode':'hybrid','v2x_fresh':1,'v2x_approaching':1,'v2x_eta_min':4.2}
-    store.sample('recent',sample);store.finish('recent','complete',{'completed':True,'mean_wait_s':12})
+    store.sample('recent',sample);store.finish('recent','complete',{'completed':True,'mean_wait_s':12,'signal_plan':'lusitania_movimientos_v3'})
     store.start('cancelled',config);store.finish('cancelled','cancelled',{'completed':False})
     with TestClient(create_app(path)) as client:
         assert {p['id'] for p in client.get('/api/config').json()['locations']}=={p['id'] for p in catalog()}
@@ -121,7 +122,7 @@ def test_api_catalog_metrics_migration_and_cooperative_csv(tmp_path):
         assert 'v2x_eta_min' in client.get('/api/runs/recent/export').text
         for bad in [{'penetration':101},{'latency_s':-1},{'mode':'real'},{'range_m':10000}]:
             assert client.post('/api/runs',json={'sensing':bad}).status_code==422
-    with sqlite3.connect(path) as db:assert db.execute('PRAGMA user_version').fetchone()[0]==4
+    with sqlite3.connect(path) as db:assert db.execute('PRAGMA user_version').fetchone()[0]==5
 
 
 @pytest.mark.integration

@@ -22,7 +22,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
   check('cámara detecta vehículos sin V2I',true);
   await page.waitForFunction(()=>window.sceneView.agents.some(a=>a.kind==='person'&&a.road.includes('_c'))&&new Set(window.sceneView.frames.flatMap(f=>f.agents.filter(a=>a.kind==='vehicle').map(a=>a.vehicle_type))).size===4,{},{timeout:30000});
   await page.locator('#pause').click();await page.waitForFunction(()=>window.sceneView.paused);
-  check('paso peatonal con vehículos detenidos',await page.evaluate(()=>window.sceneView.frames.at(-1).sample.state==='rrrr'));
+  check('pasos independientes sin conflicto',await page.evaluate(()=>window.sceneView.frames.at(-1).sample.ped_conflict===0&&!!window.sceneView.frames.at(-1).sample.ped_signals));
   check('tipos de vehículo distintos en la escena',await page.evaluate(()=>new Set(window.sceneView.frames.flatMap(f=>f.agents.filter(a=>a.kind==='vehicle').map(a=>a.vehicle_type))).size===4));
   await page.locator('.scene-card').screenshot({path:path.join(out,'rotonda_escolar.png')});
   await page.locator('.cooperative-panel').screenshot({path:path.join(out,'camara_mixta.png')});

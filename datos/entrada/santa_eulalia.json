@@ -12731,7 +12731,7 @@
     "Rotonda semaforizada junto al IES Santa Eulalia en Mérida, Extremadura. El eje del anillo y sus sentidos derivan de OSM.",
     "Cuatro entradas y cinco salidas: OSM identifica Don Benito como salida de sentido único. Falta comprobación de campo.",
     "El anillo se simplifica a un carril, frente a tres etiquetados en OSM. Accesos de Reina Sofía con dos carriles por sentido y un carril en las calles secundarias.",
-    "El modelo representa cuatro pasos y grupos semafóricos coordinados en un emplazamiento con semáforos. Simplifica la instalación; no se dispone del inventario ni de los tiempos municipales.",
+    "El modelo representa cuatro pasos y grupos semafóricos independientes por acceso en un emplazamiento con semáforos. Simplifica la instalación; no se dispone del inventario ni de los tiempos municipales.",
     "Todos los accesos se cierran para atender una fase peatonal común, conservando la prioridad de la circulación interior. La salida Don Benito no tiene paso modelado.",
     "Demanda, porcentajes de giro, salida escolar y velocidades de 30 km/h en los accesos son hipótesis. Sin calibración local."
   ]

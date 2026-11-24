@@ -3,6 +3,7 @@ from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor,as_completed
 import sys,json,hashlib,csv
 from statistics import mean
+from datetime import datetime, timezone
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'programa'))
 from its.runner import run
@@ -43,7 +44,7 @@ def main():
                 **{key:mean(r['summary'][key] for r in rows) for key in ('mean_wait_s','ped_mean_wait_s','mean_queue','co2_mean_g')},
                 'collisions':sum(r['summary']['collisions'] for r in rows),'ped_conflicts':sum(r['summary']['ped_conflicts'] for r in rows)})
     examples={site['id']:next(r for r in results if r['config']['location']==site['id'] and r['profile']=='v2i50' and r['config']['seed']==101) for site in sites}
-    data={'date':'2026-09-25','scope':'Exploración sintética; tres semillas, sin calibración de campo ni inferencia poblacional.',
+    data={'date':datetime.now(timezone.utc).date().isoformat(),'scope':'Exploración sintética; tres semillas, sin calibración de campo ni inferencia poblacional.',
           'runs':len(results),'results':results,'comparisons':comparisons,'examples':examples}
     (ROOT/'datos/procesados/multicruce.json').write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     with (ROOT/'datos/procesados/multicruce.csv').open('w',newline='',encoding='utf-8') as f:

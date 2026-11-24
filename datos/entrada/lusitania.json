@@ -12074,7 +12074,7 @@
     "Ejes de calles, edificios, parque y sentidos: OpenStreetMap. Carriles: OSM indica cuatro en Lusitania y dos en Antonio Hernández Gil; se interpretan como dos y uno por sentido, sin aforo ni inventario de aparcamiento.",
     "Anchos de carril 3,2 m, aceras 2 m, pasos 4 m y velocidad máxima 30 km/h son parámetros del modelo, no mediciones.",
     "Cuatro tramos de hasta 120 m y un único cruce activo; las calles del entorno no generan tráfico. No se representan sus intersecciones secundarias.",
-    "Demanda sintética: 60 % recto, 20 % derecha, 20 % izquierda. Giros a la izquierda ceden a movimientos prioritarios. Sin cambios de sentido.",
+    "Demanda sintética: 60 % recto, 20 % derecha, 20 % izquierda. Una entrada por turno; recto, izquierda y derecha comparten verde cuando no hay peatones. Si se atiende un paso, solo se permiten movimientos compatibles hasta que quede libre. Durante el turno completo del este se abren por separado las derechas del sur y del norte; la del norte cede al movimiento recto del este. Aperturas experimentales de 6 s con amarillo y despeje. Plan experimental, no inventario municipal de flechas. Sin cambios de sentido.",
     "Fases experimentales; no se dispone del plan semafórico municipal ni de tráfico en tiempo real."
   ],
   "signal_status": "existing"

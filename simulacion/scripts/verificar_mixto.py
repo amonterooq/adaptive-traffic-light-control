@@ -26,7 +26,7 @@ def main():
     for result in data['results']:
         directory=ROOT/result['directory'];s=result['summary']
         assert s==json.loads((directory/'resumen.json').read_text(encoding='utf-8'))
-        assert s['model_version']=='1.6.0' and s['traffic']['emissions']
+        assert s['model_version']==('1.6.0' if s.get('location','laboratorio')=='laboratorio' else '1.7.1') and s['traffic']['emissions']
         assert s['completed'] and not s['cancelled']
         assert s['generated']==s['arrived'] and s['cohort_expected']==s['cohort_arrived']
         assert s['collisions']==s['teleports']==s.get('ped_conflicts',0)==0
@@ -56,8 +56,9 @@ def main():
         assert sum(int(r['departed']) for r in rows)==s['generated']
         close(mean(int(r['queue_total']) for r in rows if s['warmup']<=int(r['t'])<s['horizon']),s['mean_queue'])
         for r in rows:
-            if r.get('ped_signal')=='G' or int(r.get('ped_crossing',0)):
+            if result['config']['location']=='laboratorio' and (r.get('ped_signal')=='G' or int(r.get('ped_crossing',0))):
                 assert r['state']=='rrrr'
+            assert int(r.get('ped_conflict',0))==0
             if r.get('camera_active'):
                 assert int(r['camera_detected'])==sum(int(r['camera_'+tipo]) for tipo in ['coche','moto','bicicleta','patinete','desconocido'])
                 assert int(r['fusion_approaching'])==sum(int(r['fusion_'+a]) for a in 'NESW')

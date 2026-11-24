@@ -6,6 +6,9 @@ import xml.etree.ElementTree as ET
 from .config import ARMS
 from .network import binary, write_xml
 from .pedestrians import PedestrianController, WALK_SECONDS, CLEAR_SECONDS, REQUEST_SECONDS
+from .controller import Observation
+
+PLAN_ROTONDA = 'santa_eulalia_pasos_v2'
 
 
 def prioridades_vehiculares(directory, links):
@@ -132,3 +135,44 @@ class ControlRotonda(PedestrianController):
 
     def state(self):
         return 'GGGG' if self.stage=='green' else 'yyyy' if self.stage=='yellow' else 'rrrr'
+
+
+class ControlPasosRotonda(PedestrianController):
+    """Cada acceso atiende su paso sin cerrar los otros accesos al anillo."""
+    def __init__(self, mode='adaptativo', timing=None):
+        super().__init__(mode,timing)
+        self.pasos={a:ControlRotonda(mode,timing) for a in ARMS}
+
+    def observe(self, obs, now):
+        super().observe(obs,now)
+        for i,a in enumerate(ARMS):
+            self.pasos[a].observe(Observation(obs.time,(obs.queues[i],0,0,0),
+                                             (obs.approaching[i],0,0,0)),now)
+
+    def detectar_pasos(self, now, monitor, movimientos):
+        for a,c in self.pasos.items():
+            esperando=sum(n for p,n in monitor.waiting_by_crossing.items() if movimientos.pasos[p]==a)
+            ocupados=sum(n for p,n in monitor.occupied_by_crossing.items() if movimientos.pasos[p]==a)
+            interiores=monitor.internal_vehicles_by_arm[a]
+            c.pedestrians(now,esperando,ocupados,interiores)
+
+    def update(self, now):
+        self.advance_clock(now)
+        for c in self.pasos.values():
+            sin_peticion=c.request_since is None
+            anterior=c.stage
+            c.update(now)
+            if anterior=='green' and c.stage=='yellow' and sin_peticion:
+                c.stage,c.since,c.reason='green',now,'sin_peticion_peatonal'
+        stages={c.stage for c in self.pasos.values()}
+        self.stage='walk' if 'walk' in stages else 'ped_clear' if 'ped_clear' in stages else 'green'
+        self.reason='pasos_independientes'
+        return self.state()
+
+    def state(self):
+        return ''.join(self.pasos[a].state()[0] for a in ARMS)
+
+    def snapshot(self, now):
+        return {**super().snapshot(now), 'axis':'accesos', 'signal_plan':PLAN_ROTONDA,
+                'ped_request_age':max(c.snapshot(now)['ped_request_age'] for c in self.pasos.values()),
+                'elapsed':min(now-c.since for c in self.pasos.values())}

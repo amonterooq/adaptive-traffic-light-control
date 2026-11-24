@@ -12,12 +12,14 @@ from statistics import mean
 import traci
 from .config import ARMS, Timing
 from .controller import Controller, Observation
+from .lusitania import ControlLusitania, PLAN, VERDE_DERECHA
+from .movimientos import Movimientos
 from .demand import generate, save
 from .network import binary, build_network, write_xml, native_path
 from . import pedestrians as ped
 from .scene import SceneCollector
-from .locations import network_directory, build_geographic, save_turning_demand, signal_states, geographic
-from .rotonda import ControlRotonda, guardar_rutas, prioridades_vehiculares
+from .locations import network_directory, build_geographic, save_turning_demand, geographic
+from .rotonda import ControlRotonda, ControlPasosRotonda, PLAN_ROTONDA, guardar_rutas, prioridades_vehiculares
 from .cooperative import CooperativeSensing, SensingConfig
 from .camaras import Camaras, CameraConfig
 from .trafico import TrafficConfig, configurar_flota, resumen_emisiones
@@ -89,7 +91,11 @@ def run(scenario, mode, seed, directory, horizon=1800, warmup=300, max_drain=180
     cooperative=CooperativeSensing(sensing,seed) if sensing.mode=='hybrid' else None
     enabled=pedestrian_profile != 'desactivado'
     net=network_directory(location,enabled)
-    if not (net/'red.net.xml').exists():
+    actualizado=(net/'red.net.xml').exists()
+    if actualizado and location=='lusitania':
+        actualizado=any(p.get('key')=='plan_revision' and p.get('value')==PLAN
+                        for p in ET.parse(net/'red.net.xml').getroot().iter('param'))
+    if not actualizado:
         if location!='laboratorio':build_geographic(location,enabled)
         else:build_network(net, pedestrians=enabled)
     vehicles=generate(scenario,seed,horizon); save(vehicles,directory,pedestrians=enabled)
@@ -127,23 +133,18 @@ def run(scenario, mode, seed, directory, horizon=1800, warmup=300, max_drain=180
     traci.start(cmd,label=label,doSwitch=False,stdout=subprocess.DEVNULL)
     conn=traci.getConnection(label)
     controller=ped.PedestrianController(mode,timing) if enabled else Controller(mode,timing)
-    if location=='santa_eulalia':controller=ControlRotonda(mode,timing)
+    if location=='lusitania':controller=ControlLusitania(mode,timing,peatones=enabled)
+    if location=='santa_eulalia':controller=ControlPasosRotonda(mode,timing) if enabled else ControlRotonda(mode,timing)
     monitor=ped.Monitor(conn,persons,rotonda=location=='santa_eulalia') if enabled else None
     scene=SceneCollector() if on_frame else None
     # Verify the signal-to-movement map instead of assuming netconvert retained indices.
     links=conn.trafficlight.getControlledLinks('J1')
+    movimientos=Movimientos(net,links) if location!='laboratorio' else None
+    if location=='lusitania':controller.compatibles=movimientos.compatibles()
     link_arms=[link[0][0].split('_')[0] if link[0][0][0]!=':' else None for link in links]
     if location=='laboratorio' and (sorted(a for a in link_arms if a is not None)!=sorted(ARMS) or len(links)!=(8 if enabled else 4)):
         conn.close();raise RuntimeError('Mapa semafórico incompatible con cuatro movimientos rectos')
-    templates={}
     prioridad_rotonda=prioridades_vehiculares(net,links) if location=='santa_eulalia' else None
-    if location not in ('laboratorio','santa_eulalia'):
-        for axis in (('N','S'),('E','W')):
-            template=next((p for p in signal_states(net)
-                if {a for a,s in zip(link_arms,p) if a and s in 'Gg'}==set(axis)),None)
-            if template is None or len(template)!=len(links):
-                conn.close();raise RuntimeError('El plan de SUMO no contiene los dos ejes esperados')
-            templates[axis[0]]=template
     detector_ids=conn.lanearea.getIDList()
     detector_groups={a:[d for d in detector_ids if d==f'det_{a}' or d.startswith(f'det_{a}_')] for a in ARMS}
     for detectors in detector_groups.values():
@@ -170,20 +171,35 @@ def run(scenario, mode, seed, directory, horizon=1800, warmup=300, max_drain=180
             if enabled:
                 waiting,occupied,internal_vehicles=monitor.observe(conn,t)
                 controller.pedestrians(t,waiting,occupied,internal_vehicles)
+                if location=='lusitania':
+                    controller.detectar_pasos(t,monitor.waiting_by_crossing,monitor.occupied_by_crossing)
+                    controller.rutas_dentro=monitor.internal_routes
+                elif location=='santa_eulalia':
+                    controller.detectar_pasos(t,monitor,movimientos)
+            elif location=='lusitania':
+                interiores=[v for v in conn.vehicle.getIDList() if conn.vehicle.getRoadID(v).startswith(':J1_')]
+                internal_vehicles=len(interiores)
+                controller.rutas_dentro={(conn.vehicle.getRoute(v)[0].split('_')[0],conn.vehicle.getRoute(v)[-1].split('_')[0]) for v in interiores}
+                controller.pedestrians(t,0,0,internal_vehicles)
             signals=controller.update(t)
             if location=='santa_eulalia' and not enabled:
                 controller.stage='green';controller.since=0;controller.reason='prioridad_anillo';signals='GGGG'
             ped_signal='G' if enabled and controller.stage=='walk' else 'r'
             applied=''.join(signals[ARMS.index(a)] if a is not None else ped_signal for a in link_arms)
+            if location=='lusitania':applied=movimientos.aplicar(controller)
             if location=='santa_eulalia':
                 if not enabled:signals='GGGG'
                 # G tiene prioridad; g conserva la cesión calculada al construir la red.
                 applied=''.join((prioridad_rotonda[i] if signals[0]=='G' else signals[0])
                     if a is not None else ped_signal for i,a in enumerate(link_arms))
-            elif location!='laboratorio' and 'G' in signals:
-                template=templates['N' if signals[0]=='G' else 'E']
-                applied=''.join(template[i] if a else ped_signal for i,a in enumerate(link_arms))
+                if enabled:applied=movimientos.aplicar_rotonda(controller,prioridad_rotonda)
             conn.trafficlight.setRedYellowGreenState('J1',applied)
+            conflicto_movimientos=False
+            if movimientos and enabled:
+                interiores={i for i,(a,b,_) in movimientos.vehiculos.items()
+                            if (monitor.internal_vehicles_by_arm[a] if location=='santa_eulalia'
+                                else (a,b) in monitor.internal_routes)}
+                conflicto_movimientos=movimientos.conflicto(applied,monitor.occupied_by_crossing,interiores)
             conn.simulationStep()
             for evento in conn.simulation.getCollisions():
                 collision_events.append({'t':t+1,'collider':evento.collider,'victim':evento.victim,
@@ -199,7 +215,12 @@ def run(scenario, mode, seed, directory, horizon=1800, warmup=300, max_drain=180
                            vehicles_crossing=internal_vehicles,ped_stage=controller.stage,
                            ped_arrived=conn.simulation.getArrivedPersonNumber(),
                            ped_conflict=int((ped_signal=='G' and (signals!='rrrr' or internal_vehicles>0)) or (occupied>0 and 'G' in signals)))
+                if movimientos:
+                    row['ped_conflict']=int(conflicto_movimientos)
+                    for i,paso in movimientos.peatones.items():
+                        row['ped_'+movimientos.pasos[paso]]=applied[i]
             if location!='laboratorio':row.update(tls_state=applied,location=location)
+            if location=='lusitania':row.update(right_turn_arm=controller.derecha or '',right_turn_signal=controller.senal_derecha())
             if cooperative:
                 row.update(telemetry,sensing_mode='hybrid',
                            v2x_used=int(not blackout or not blackout[0]<=t<blackout[1]))
@@ -213,6 +234,8 @@ def run(scenario, mode, seed, directory, horizon=1800, warmup=300, max_drain=180
                 sample={**row,**controller.snapshot(t),'scenario':scenario,'mode':mode,'seed':seed,
                          'horizon':horizon,'warmup':warmup,'draining':t>=horizon,
                          'arrived_total':sum(r['arrived'] for r in rows)}
+                if not enabled:sample={k:v for k,v in sample.items() if not k.startswith('ped_')}
+                if movimientos:sample.update(movimientos.detalle(applied))
                 if on_step:on_step(sample)
                 if on_frame:on_frame(scene.collect(conn,sample,cooperative))
             if t>=horizon and conn.simulation.getMinExpectedNumber()==0:break
@@ -237,6 +260,12 @@ def run(scenario, mode, seed, directory, horizon=1800, warmup=300, max_drain=180
         v2x_expired=cooperative.expired,v2x_ttl_s=cooperative.ttl,v2x_anticipation_s=cooperative.anticipation)
     metadata.update(traffic=traffic.model_dump(),fleet_sha256=hashlib.sha256((directory/'flota.csv').read_bytes()).hexdigest(),
                     model_version='1.6.0')
+    if location=='lusitania':
+        metadata.update(signal_plan=PLAN,model_version='1.7.1',right_turn_timing={
+            'main_entry':'E','order':['S','N'],'green':VERDE_DERECHA,
+            'yellow':timing.yellow,'clear_min':timing.all_red,'yielding_entry':'N'})
+        if enabled:metadata['pedestrian_timing'].update(request_trigger=None,request_policy='oldest_compatible_at_next_entry')
+    if location=='santa_eulalia':metadata.update(signal_plan=PLAN_ROTONDA,model_version='1.7.1')
     if camaras:metadata.update(camera=camera.model_dump())
     if traffic.emissions:metadata.update(resumen_emisiones(directory,vehicles,warmup,horizon))
     metrics=summarize(directory,vehicles,rows,warmup,horizon,metadata)

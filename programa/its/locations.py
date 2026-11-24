@@ -68,6 +68,9 @@ def build_geographic(location, pedestrians=True):
         '--connection-files','red.con.xml','--output-file','red.net.xml','--no-turnarounds','true',
         '--xml-validation','never','--tls.allred.time','2','--tls.yellow.time','3','--tls.left-green.time','0'],
         cwd=directory,check=True,capture_output=True,text=True)
+    if location=='lusitania':
+        from .movimientos import preparar_prioridades
+        preparar_prioridades(directory)
     if pedestrians:
         # A cut boundary is not another crossing. SUMO creates sidewalk U-turns
         # there by default; on short arms those can bypass the controlled step.

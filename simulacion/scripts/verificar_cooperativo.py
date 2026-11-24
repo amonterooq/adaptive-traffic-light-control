@@ -49,7 +49,7 @@ def main():
         assert len(trips)==s['generated'] and len(walks)==s['ped_generated']
         cohort=[t for t in trips if s['warmup']<=float(planned[t.get('id')]['scheduled'])<s['horizon']]
         close(mean(float(t.get('waitingTime'))+float(t.get('departDelay')) for t in cohort),s['mean_wait_s'])
-        assert s['model_version']=='1.6.0' and s['traffic']['emissions']
+        assert s['model_version']==('1.6.0' if result['config']['location']=='laboratorio' else '1.7.1') and s['traffic']['emissions']
         emissions=[float(t.find('emissions').get('CO2_abs'))/1000 for t in cohort]
         close(sum(emissions),s['co2_cohort_g']);close(mean(emissions),s['co2_mean_g'])
         pcohort=[p for p in walks if s['warmup']<=float(planned_p[p.get('id')]['scheduled'])<s['horizon']]
@@ -63,9 +63,13 @@ def main():
         previous={key:0 for key in ('v2x_sent','v2x_received','v2x_lost','v2x_expired')}
         for r in rows:
             assert int(r['ped_conflict'])==0
-            assert r['state'] in ('GrGr','rGrG','yryr','ryry','rrrr')
-            if int(r['ped_crossing']) or r['ped_signal']=='G':assert r['state']=='rrrr'
-            if r['ped_signal']=='G':assert int(r['vehicles_crossing'])==0
+            if result['config']['location']=='laboratorio':
+                assert r['state'] in ('GrGr','rGrG','yryr','ryry','rrrr')
+                if int(r['ped_crossing']) or r['ped_signal']=='G':assert r['state']=='rrrr'
+                if r['ped_signal']=='G':assert int(r['vehicles_crossing'])==0
+            else:
+                assert len(r['state'])==4 and set(r['state'])<={'G','y','r'}
+                assert r['state'].count('G')<=1
             if result['profile']!='sensores':
                 assert int(r['v2x_approaching'])==sum(int(r['v2x_'+a]) for a in 'NESW')
                 assert int(r['v2x_approaching'])<=int(r['v2x_fresh'])

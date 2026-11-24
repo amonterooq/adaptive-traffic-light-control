@@ -10,7 +10,7 @@ la sección Proyectos y la publicación de LinkedIn.
 **TFG · Sistema ITS de control semafórico adaptativo** — Universidad de Extremadura.
 Desarrollo e integración de un prototipo en Python con SUMO/TraCI, API FastAPI,
 interfaz web y persistencia SQLite. Evaluación de control fijo y adaptativo en
-336 simulaciones con vehículos, peatones y detección V2I emulada, analizando
+348 simulaciones con vehículos, peatones y detección V2I emulada, analizando
 esperas y emisiones de escape estimadas bajo demanda sintética.
 
 ## LinkedIn · Proyectos
@@ -23,7 +23,9 @@ control semafórico y supervisión web mediante Python, SUMO, TraCI, FastAPI y
 SQLite. Incluye un cruce de laboratorio y dos escenarios de Mérida, peatones,
 tráfico mixto y comunicaciones V2I emuladas.
 
-La evaluación comprende 336 ejecuciones. El análisis muestra mejoras en
+La evaluación actual comprende 348 ejecuciones: 336 de la batería base, con
+21 ensayos urbanos recalculados, y doce ensayos urbanos largos adicionales.
+El [estudio actualizado](ESTUDIO_ACTUALIZADO.md) muestra mejoras en
 determinadas demandas y también resultados desfavorables con demanda alta y
 compromisos entre esperas peatonales y vehiculares. La demanda es sintética y
 el prototipo no constituye un sistema validado para regular tráfico real.

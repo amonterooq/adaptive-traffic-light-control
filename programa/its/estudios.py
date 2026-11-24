@@ -76,4 +76,9 @@ def catalogo_estudios():
                     nombre + f' · verde fijo {green} s', referencia(escenario, 'fijo', 101, green=green), range(101, 104))
     incluir('fallo_muestras', '6. Sensibilidad y respaldo', 'Tráfico cambiante · interrupción 600–630 s',
             referencia('dinamico', 'fijo', 101, blackout=(600, 630)), range(101, 104))
+    for location in ('lusitania','santa_eulalia'):
+        config=mixto(location,'escolar',101,'fijo').model_copy(update={'horizon':1800})
+        nombre=next(s['name'] for s in catalog() if s['id']==location)
+        incluir('movimientos_30min_'+location,'7. Revisión urbana · treinta minutos',nombre,
+                config,range(101,104))
     return casos

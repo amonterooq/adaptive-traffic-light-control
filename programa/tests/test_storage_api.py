@@ -79,6 +79,47 @@ def test_version_one_migrates_and_persists_pedestrian_samples(tmp_path):
     restored=Store(path).samples('a')[0]
     assert restored['ped_signal']=='G' and restored['ped_crossing']==1
     with store.connect() as db:
-        assert db.execute('PRAGMA user_version').fetchone()[0]==4
+        assert db.execute('PRAGMA user_version').fetchone()[0]==5
         db.execute("DELETE FROM runs WHERE id='a'")
         assert db.execute('SELECT COUNT(*) FROM pedestrian_samples').fetchone()[0]==0
+
+
+def test_guarda_movimientos_y_rechaza_estados_invalidos(tmp_path):
+    store=Store(tmp_path/'pasos.db')
+    store.start('a',{'scenario':'medio','mode':'fijo','seed':101})
+    sample={'t':0,'q_N':1,'q_E':0,'q_S':0,'q_W':0,'state':'Grrr','fallback':False,
+            'arrived':0,'in_network':1,'movement_signals':{'N':{'s':'G','l':'r','r':'G'}},
+            'ped_signals':{':J1_c0':'G'},'tls_state':'GrGrrrrrrrG',
+            'signal_plan':'lusitania_movimientos_v3','ped_E':'G'}
+    store.sample('a',sample)
+    restored=Store(store.path).samples('a')[0]
+    for key in ('movement_signals','ped_signals','signal_plan','tls_state','ped_E'):
+        assert restored[key]==sample[key]
+    for state in ('Grr','Grrrr','Gxxx',''):
+        with pytest.raises(sqlite3.IntegrityError):store.sample('a',{**sample,'t':1,'state':state})
+
+
+def test_metricas_no_mezclan_planes_anteriores_con_el_actual(tmp_path,monkeypatch):
+    import shutil
+    import its.api as api_module
+    source=api_module.ROOT/'datos/procesados/historico_v1_6'
+    (tmp_path/'programa/web').mkdir(parents=True)
+    (tmp_path/'datos/procesados').mkdir(parents=True)
+    for name in ('multicruce.json','mixto.json'):
+        shutil.copyfile(source/name,tmp_path/'datos/procesados'/name)
+    monkeypatch.setattr(api_module,'ROOT',tmp_path)
+    path=tmp_path/'planes.db'
+    store=Store(path)
+    config={'scenario':'medio','mode':'fijo','seed':101,'location':'lusitania'}
+    store.start('anterior',config)
+    store.finish('anterior','complete',{'completed':True,'mean_wait_s':12})
+    with TestClient(create_app(path)) as client:
+        point=next(p for p in client.get('/api/locations/metrics').json()['points'] if p['id']=='lusitania')
+        assert point['origin']=='none'
+        assert client.get('/api/runs').json()[0]['id']=='anterior'
+        rows=client.get('/api/results/mixed').json()['comparisons']
+        assert all(r['legacy_signal_plan'] for r in rows if r['location']!='laboratorio')
+        store.start('actual',config)
+        store.finish('actual','complete',{'completed':True,'mean_wait_s':20,'signal_plan':'lusitania_movimientos_v3'})
+        point=next(p for p in client.get('/api/locations/metrics').json()['points'] if p['id']=='lusitania')
+        assert point['origin']=='session' and point['last_run']['id']=='actual'

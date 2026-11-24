@@ -31,7 +31,7 @@ const path=require('node:path');
     check('recarga recupera ubicación activa',await page.locator('#location').inputValue()==='lusitania');
     await page.waitForFunction(()=>window.sceneView.agents.some(a=>a.kind==='person'&&a.road.startsWith(':J1_c')),{},{timeout:30000});
     await page.locator('#pause').click();await page.waitForFunction(()=>window.sceneView.paused);await page.waitForTimeout(250);
-    check('peatones reales cruzando con rojo vehicular',await page.evaluate(()=>window.sceneView.agents.some(a=>a.kind==='person'&&a.road.startsWith(':J1_c'))&&window.sceneView.frames.at(-1).sample.state==='rrrr'));
+    check('peatones con movimientos compatibles',await page.evaluate(()=>window.sceneView.agents.some(a=>a.kind==='person'&&a.road.startsWith(':J1_c'))&&window.sceneView.frames.at(-1).sample.ped_conflict===0&&!!window.sceneView.frames.at(-1).sample.movement_signals));
     await page.locator('.scene-card').screenshot({path:path.join(out,'lusitania_simulacion.png')});
     await page.screenshot({path:path.join(out,'lusitania_escritorio.png'),fullPage:true});
     await page.setViewportSize({width:390,height:844});await page.waitForTimeout(150);

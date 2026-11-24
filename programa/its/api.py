@@ -17,6 +17,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 from .config import ROOT, Timing, scenarios
 from .runner import run
+from .lusitania import PLAN
+from .rotonda import PLAN_ROTONDA
 from .experimento import ExperimentConfig
 from .estudios import catalogo_estudios
 from .storage import Store
@@ -134,7 +136,7 @@ def create_app(db_path=None,run_function=run):
         manager.stop_event.set()
         if manager.thread:manager.thread.join(timeout=10)
 
-    app=FastAPI(title='Mérida · Laboratorio de movilidad',version='1.6.0',lifespan=lifespan)
+    app=FastAPI(title='Mérida · Laboratorio de movilidad',version='1.7.1',lifespan=lifespan)
     app.state.manager=manager
 
     @app.middleware('http')
@@ -185,6 +187,10 @@ def create_app(db_path=None,run_function=run):
             active=current.get('config',{}).get('location')==id and current['status']=='running'
             sample=current.get('sample') if active else None
             example=examples.get(id)
+            plan={'lusitania':PLAN,'santa_eulalia':PLAN_ROTONDA}.get(id)
+            if plan:
+                if ((row or {}).get('summary') or {}).get('signal_plan')!=plan:row=None
+                if ((example or {}).get('summary') or {}).get('signal_plan')!=plan:example=None
             points.append({**point,'active':active,'paused':active and current.get('paused',False),
                 'sample':sample,'origin':'session' if row else 'example' if example else 'none',
                 'last_run':row,'example':example})
@@ -247,7 +253,20 @@ def create_app(db_path=None,run_function=run):
         path=ROOT/'datos/procesados/mixto.json'
         if not path.exists():return {'comparisons':[]}
         data=json.loads(path.read_text(encoding='utf-8'))
+        legacy={}
+        for location,plan in [('lusitania',PLAN),('santa_eulalia',PLAN_ROTONDA)]:
+            runs=[r for r in data.get('results',[]) if r.get('config',{}).get('location')==location]
+            legacy[location]=not runs or any((r.get('summary') or {}).get('signal_plan')!=plan for r in runs)
+        data['comparisons']=[{**r,'legacy_signal_plan':legacy.get(r.get('location'),False)}
+                             for r in data['comparisons']]
         return {key:data[key] for key in ('runs','paired_groups','horizon','warmup','scope','comparisons')}
+
+    @app.get('/api/results/movements')
+    def movement_results():
+        path=ROOT/'datos/procesados/movimientos_30min.json'
+        if not path.exists():return {'comparisons':[]}
+        data=json.loads(path.read_text(encoding='utf-8'))
+        return {key:data[key] for key in ('date','runs','seeds','horizon','warmup','scope','comparisons')}
 
     @app.get('/api/map')
     def map_data(location:Location='laboratorio'):

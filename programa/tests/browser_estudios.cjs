@@ -10,7 +10,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
   const output=process.env.ITS_SCREENSHOTS||path.resolve('documentacion/capturas');
   fs.mkdirSync(output,{recursive:true});
   try{
-    await page.goto(base);await page.waitForFunction(()=>document.querySelectorAll('#study-case option').length===38);
+    await page.goto(base);await page.waitForFunction(()=>document.querySelectorAll('#study-case option').length===40);
     await page.locator('#study-panel summary').click();
     const studies=await (await page.request.get(base+'/api/studies')).json();
     const forms=[];
@@ -31,7 +31,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
       const expected={...study.config,timing:{min_green:study.config.timing.min_green,max_green:study.config.timing.max_green,fixed_green:study.config.timing.fixed_green}};
       assert.deepEqual(actual,expected,study.id);forms.push(study.id);
     }
-    check('38 estudios cargan todos los parámetros de sus lotes',forms.length===38);
+    check('40 estudios cargan todos los parámetros de sus lotes',forms.length===40);
     await page.locator('#study-case').selectOption('principal_medio');
     await page.locator('#study-mode').selectOption('adaptativo');await page.locator('#prepare-study').click();
     await page.waitForFunction(()=>document.querySelector('#study-reference').textContent.includes('Referencia incluida'));

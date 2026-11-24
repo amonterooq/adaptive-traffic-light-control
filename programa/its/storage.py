@@ -11,19 +11,19 @@ class Store:
         self.path.parent.mkdir(parents=True,exist_ok=True)
         with self.connect() as db:
             version=db.execute('PRAGMA user_version').fetchone()[0]
-            if version>4:raise RuntimeError('La base de datos es de una versión posterior')
+            if version>5:raise RuntimeError('La base de datos es de una versión posterior')
             table=db.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='samples'").fetchone()
-            if table and "'GGGG'" not in table['sql']:
+            if table and 'length(state)' not in table['sql']:
                 # SQLite no permite ampliar un CHECK con ALTER COLUMN.
                 # Se copia la tabla en una transacción y se conservan sus claves.
                 schema=Path(__file__).with_name('schema.sql').read_text(encoding='utf-8')
                 create=next(s for s in schema.split(';') if 'CREATE TABLE IF NOT EXISTS samples (' in s)
                 db.execute('PRAGMA foreign_keys=OFF')
                 db.execute('BEGIN IMMEDIATE')
-                db.execute(create.replace('samples (','samples_v4 (',1))
-                db.execute('INSERT INTO samples_v4 SELECT * FROM samples')
+                db.execute(create.replace('samples (','samples_v5 (',1))
+                db.execute('INSERT INTO samples_v5 SELECT * FROM samples')
                 db.execute('DROP TABLE samples')
-                db.execute('ALTER TABLE samples_v4 RENAME TO samples')
+                db.execute('ALTER TABLE samples_v5 RENAME TO samples')
                 if db.execute('PRAGMA foreign_key_check').fetchall():
                     raise RuntimeError('La migración no conserva las relaciones de las muestras.')
                 db.commit()
@@ -55,6 +55,10 @@ class Store:
             if 'sensing_mode' in s:
                 payload={k:v for k,v in s.items() if k.startswith(('v2x_','ped_wait_','camera_','fusion_')) or k=='sensing_mode'}
                 db.execute('INSERT INTO cooperative_samples VALUES (?,?,?)',(id,s['t'],json.dumps(payload)))
+            if 'movement_signals' in s:
+                payload={k:s[k] for k in ('movement_signals','ped_signals','tls_state','signal_plan','right_turn_arm','right_turn_signal') if k in s}
+                payload.update({k:v for k,v in s.items() if k in ('ped_N','ped_E','ped_S','ped_W')})
+                db.execute('INSERT INTO movement_samples VALUES (?,?,?)',(id,s['t'],json.dumps(payload)))
 
     def finish(self,id,status,summary):
         with self.connect() as db:
@@ -76,11 +80,14 @@ class Store:
 
     def samples(self,id):
         with self.connect() as db:
-            rows=[dict(r) for r in db.execute('''SELECT s.*,p.ped_signal,p.ped_waiting,p.ped_crossing,p.ped_stage,c.payload_json
+            rows=[dict(r) for r in db.execute('''SELECT s.*,p.ped_signal,p.ped_waiting,p.ped_crossing,p.ped_stage,c.payload_json,m.payload_json AS movements_json
                 FROM samples s LEFT JOIN pedestrian_samples p ON s.run_id=p.run_id AND s.t=p.t
                 LEFT JOIN cooperative_samples c ON s.run_id=c.run_id AND s.t=c.t
+                LEFT JOIN movement_samples m ON s.run_id=m.run_id AND s.t=m.t
                 WHERE s.run_id=? ORDER BY s.t''',(id,))]
-            for row in rows:row.update(json.loads(row.pop('payload_json') or '{}'))
+            for row in rows:
+                row.update(json.loads(row.pop('payload_json') or '{}'))
+                row.update(json.loads(row.pop('movements_json') or '{}'))
             return rows
 
     def latest_complete_by_location(self):

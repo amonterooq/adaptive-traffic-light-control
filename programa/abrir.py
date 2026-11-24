@@ -17,7 +17,7 @@ def existing_server(port):
             data=json.load(response)
     except (OSError,ValueError):return None
     info=data.get('info',{}) if isinstance(data,dict) else {}
-    if isinstance(info,dict) and info.get('title')=='Mérida · Laboratorio de movilidad' and info.get('version')=='1.6.0':
+    if isinstance(info,dict) and info.get('title')=='Mérida · Laboratorio de movilidad' and info.get('version')=='1.7.1':
         return url
     return None
 

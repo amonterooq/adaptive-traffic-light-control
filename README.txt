@@ -45,6 +45,16 @@ estimación de las emisiones de escape calculada por SUMO.
 
 4. RESULTADOS
 
+En esta revisión, Lusitania controla cada giro y cada paso peatonal. Las flechas
+indican qué movimientos pueden pasar. En Santa Eulalia, cada paso cierra solo
+su acceso y su salida; otros accesos pueden seguir circulando.
+
+Las tablas urbanas incluidas se han recalculado con el control actual. Los
+ensayos cortos y los de treinta minutos aparecen por separado. El selector
+permite cargar las mismas opciones y semillas para repetirlos. El estudio
+y sus conclusiones están en docs/ESTUDIO_ACTUALIZADO.md. El historial identifica
+cada versión del control.
+
 El historial guarda las opciones y métricas de cada ejecución y permite
 descargar sus series en CSV. Se conserva en datos/sesiones/laboratorio.sqlite3.
 Comparar resultados muestra las baterías de experimentos incluidas.

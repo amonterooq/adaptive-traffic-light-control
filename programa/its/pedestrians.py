@@ -113,18 +113,33 @@ class Monitor:
 
     def observe(self, conn, now):
         waiting = occupied = 0
+        self.waiting_by_crossing = {p: 0 for p in self.crossings}
+        self.occupied_by_crossing = {p: 0 for p in self.crossings}
         self.waiting_by_arm={a:0 for a in ARMS}
         for pid in conn.person.getIDList():
             edge = conn.person.getRoadID(pid)
             if edge in self.crossings:
                 occupied += 1
+                self.occupied_by_crossing[edge] += 1
                 self.entered.setdefault(pid, now)
             elif edge in self.walkingareas and conn.person.getNextEdge(pid) in self.crossings and conn.person.getWaitingTime(pid) > 0:
                 waiting += 1
+                self.waiting_by_crossing[conn.person.getNextEdge(pid)] += 1
                 self.requests.setdefault(pid,now)
                 arm=self.arm_by_person.get(pid)
                 if arm:self.waiting_by_arm[arm]+=1
-        vehicles = sum(conn.vehicle.getRoadID(v).startswith(self.internal_prefix) for v in conn.vehicle.getIDList())
+        vehicles = 0
+        self.internal_vehicles_by_arm = {a:0 for a in ARMS}
+        self.internal_routes = set()
+        for v in conn.vehicle.getIDList():
+            edge = conn.vehicle.getRoadID(v)
+            if edge.startswith(self.internal_prefix):
+                vehicles += 1
+                if self.internal_prefix == ':G_':
+                    self.internal_vehicles_by_arm[edge.split('_')[1]] += 1
+                else:
+                    route = conn.vehicle.getRoute(v)
+                    self.internal_routes.add((route[0].split('_')[0],route[-1].split('_')[0]))
         return waiting, occupied, vehicles
 
 

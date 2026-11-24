@@ -7,8 +7,9 @@ const arms = ['N','E','S','W'];
 const armNames = ['Norte','Este','Sur','Oeste'];
 const locationNames={lusitania:'Lusitania',laboratorio:'Laboratorio',santa_eulalia:'Reina Sofía · IES Santa Eulalia'};
 const locationName=id=>locationNames[id||'laboratorio']||id;
+const planLabels={paso_compatible:'Paso peatonal y giros compatibles',pasos_independientes:'Regulación independiente de cada paso'};
 const reasons = {prioridad_anillo:'Cesión de paso a la circulación del anillo',inicio:'Inicio',despeje:'Despeje de la intersección',eje_alterno:'Paso al eje opuesto',verde_maximo:'Verde máximo alcanzado',demanda_opuesta:'Cola del eje opuesto',respaldo_temporizado:'Respaldo por falta de datos',temporizacion_fija:'Fin del verde fijo'};
-Object.assign(reasons,{despeje_peatonal:'Despeje peatonal',cruce_despejado:'Cruce peatonal libre',servicio_peatonal:'Paso exclusivo para peatones',espera_despeje_vehicular:'Esperando a que salgan los vehículos',solicitud_peatonal:'Atención a solicitud de paso'});
+Object.assign(reasons,{entrada_siguiente:'Paso a la siguiente entrada',demanda_otras_entradas:'Demanda en otra entrada',despeje_peatonal:'Despeje peatonal',cruce_despejado:'Cruce peatonal libre',servicio_peatonal:'Paso exclusivo para peatones',espera_despeje_vehicular:'Esperando a que salgan los vehículos',solicitud_peatonal:'Atención a solicitud de paso'});
 let trace=[],lastRun=null,lastStatus=null,viewHistory=false,mapView=[0,0,1800,1500],activeRun=false;
 let mapDefault=[0,0,1800,1500];
 let reportRequest=0,reportRun=null;
@@ -106,17 +107,26 @@ function renderSample(s){
   renderCooperative(s);
   $('ped-state').textContent=s.ped_signal==null?'Red sin pasos':s.ped_signal==='G'?'Puede iniciar el cruce':s.ped_stage==='ped_clear'?'Despeje · no iniciar cruce':'Espere';
   $('ped-lamp').className='lamp '+(s.ped_signal==null?'':s.ped_signal==='G'?'green':'red');
+  if(s.ped_signals&&Object.keys(s.ped_signals).length){
+    const abiertos=Object.values(s.ped_signals).filter(v=>v==='G').length;
+    $('ped-state').textContent=abiertos?`${abiertos} paso(s) en verde · mira cada señal en el cruce`:'Pasos en rojo · espera o despeje';
+  }
   $('ped-waiting').textContent=fmt(s.ped_waiting,0);$('ped-crossing').textContent=fmt(s.ped_crossing,0);
   $('metric-queue').textContent=fmt(s.queue_total,0);$('metric-network').textContent=fmt(s.in_network,0);$('metric-arrived').textContent=fmt(s.arrived_total,0);$('metric-time').textContent=minutes(s.t);
   $('metric-period').textContent=s.draining?'Vaciado de la red':s.t<s.warmup?'Periodo de calentamiento':'Periodo de medida';
   for(const [i,a]of arms.entries()){
     $('q-'+a).textContent=s['q_'+a];const code=s.state[i],cls=['G','g'].includes(code)?'green':code==='y'?'yellow':'red';
     $('lamp-'+a).className='lamp '+cls;$('word-'+a).textContent=cls==='green'?'Verde':cls==='yellow'?'Amarillo':'Rojo';
+    if(s.location==='lusitania'&&s.movement_signals?.[a]){
+      const turns=s.movement_signals[a],words={G:'verde',g:'verde (ceder)',y:'amarillo',r:'rojo'};
+      $('word-'+a).textContent=[['l','←'],['s','↑'],['r','→']].map(([k,arrow])=>arrow+' '+words[turns[k]]).join(' · ');
+      if(new Set(Object.values(turns)).size>1)$('lamp-'+a).className='lamp';
+    }
   }
   $('phase-time').textContent=s.elapsed==null?'':`${s.elapsed} s de fase`;
   $('sample-age').textContent=s.sample_age==null?'Sin muestra':`${s.sample_age} s simulados`;
   $('effective-mode').textContent=s.fallback?'Respaldo fijo':s.mode==='fijo'?'Temporización fija':s.camera_active?'Colas + cámara + V2I disponible':s.sensing_mode==='hybrid'?'Colas + aproximaciones V2I':'Adaptación por colas';
-  $('decision').textContent=reasons[s.reason]||'Serie histórica';
+  $('decision').textContent=planLabels[s.reason]||reasons[s.reason]||'Serie histórica';
   if(s.fallback)notice('Muestras obsoletas. El controlador utiliza temporización de respaldo.',true);
 }
 function clearSample(preparing=true){
@@ -197,7 +207,7 @@ async function loadHistory(){
     const runs=await api('/api/runs'),body=$('history-body');body.replaceChildren();
     if(!runs.length){const tr=body.insertRow();const td=tr.insertCell();td.colSpan=12;td.textContent='Todavía no hay ejecuciones guardadas.';return;}
     for(const row of runs){
-      const tr=body.insertRow();const values=[new Date(row.created_at).toLocaleString('es-ES'),locationName(row.config?.location),labels[row.scenario]+(row.config?.traffic?.fleet==='mixto'?' · mixto':'')+(row.config?.camera?.enabled?' · cámara':''),pedLabels[row.config?.pedestrian_profile||'desactivado'],(row.mode==='fijo'?'Fijo':'Adaptativo')+' · '+(row.config?.sensing?.mode==='hybrid'?'V2I '+row.config.sensing.penetration+' %':'sensores'),row.seed,fmt(row.config?.horizon/60,0)+' min',statuses[row.status],row.status==='complete'?fmt(row.summary?.mean_wait_s)+' s':'—',row.status==='complete'&&row.summary?.ped_mean_wait_s!=null?fmt(row.summary.ped_mean_wait_s)+' s':'—',row.status==='complete'&&row.summary?.co2_mean_g!=null?fmt(row.summary.co2_mean_g)+' g/veh.':'—'];
+      const tr=body.insertRow();const values=[new Date(row.created_at).toLocaleString('es-ES'),locationName(row.config?.location)+(['lusitania','santa_eulalia'].includes(row.config?.location)?(row.summary?.signal_plan===({lusitania:'lusitania_movimientos_v3',santa_eulalia:'santa_eulalia_pasos_v2'}[row.config.location])?' · pasos independientes':' · plan anterior'):''),labels[row.scenario]+(row.config?.traffic?.fleet==='mixto'?' · mixto':'')+(row.config?.camera?.enabled?' · cámara':''),pedLabels[row.config?.pedestrian_profile||'desactivado'],(row.mode==='fijo'?'Fijo':'Adaptativo')+' · '+(row.config?.sensing?.mode==='hybrid'?'V2I '+row.config.sensing.penetration+' %':'sensores'),row.seed,fmt(row.config?.horizon/60,0)+' min',statuses[row.status],row.status==='complete'?fmt(row.summary?.mean_wait_s)+' s':'—',row.status==='complete'&&row.summary?.ped_mean_wait_s!=null?fmt(row.summary.ped_mean_wait_s)+' s':'—',row.status==='complete'&&row.summary?.co2_mean_g!=null?fmt(row.summary.co2_mean_g)+' g/veh.':'—'];
       values.forEach(v=>{tr.insertCell().textContent=v;});
       const td=tr.insertCell(),button=document.createElement('button');button.textContent='Ver serie';button.onclick=async()=>{
         const samples=await api(`/api/runs/${row.id}/samples`);viewHistory=true;trace=samples.map(s=>({...s,q_N:s.q_n,q_E:s.q_e,q_S:s.q_s,q_W:s.q_w,queue_total:s.q_n+s.q_e+s.q_s+s.q_w}));draw();$('chart-caption').textContent=`Histórico: ${locationName(row.config?.location)}, ${labels[row.scenario]}, ${row.mode}, semilla ${row.seed}. ${samples.length} muestras.`;
@@ -211,7 +221,12 @@ $('refresh-history').onclick=loadHistory;
 async function loadResults(){
   const mixed=await api('/api/results/mixed');$('mixed-results-body').replaceChildren();
   const cases={coches:'Solo coches',mixto:'Tráfico mixto sin peatones',peatones:'Con peatones',velocidades:'Distintas velocidades',exceso:'Ensayo 30/50/70',omisiones:'Cámara omite 30 %',sin_clasificar:'Sin clasificación',sin_camara:'Cámara sin detecciones',v2i50:'Cámara y V2I 50 %',escolar:'Salida escolar'};
-  for(const row of mixed.comparisons){const tr=$('mixed-results-body').insertRow();[locationName(row.location)+' · '+cases[row.case],...['mean_wait_s','ped_mean_wait_s','co2_mean_g'].map(k=>fmt(row['fijo_'+k])+' / '+fmt(row['adaptativo_'+k]))].forEach(v=>tr.insertCell().textContent=v);}
+  for(const row of mixed.comparisons){const tr=$('mixed-results-body').insertRow();[locationName(row.location)+' · '+cases[row.case]+(row.legacy_signal_plan?' · plan de la memoria':''),...['mean_wait_s','ped_mean_wait_s','co2_mean_g'].map(k=>fmt(row['fijo_'+k])+' / '+fmt(row['adaptativo_'+k]))].forEach(v=>tr.insertCell().textContent=v);}
+  const revised=await api('/api/results/movements');$('movement-results-body').replaceChildren();
+  for(const row of revised.comparisons){
+    const tr=$('movement-results-body').insertRow();
+    [locationName(row.location),...['mean_wait_s','ped_mean_wait_s','co2_mean_g'].map(k=>fmt(row['fijo_'+k])+' / '+fmt(row['adaptativo_'+k]))].forEach(v=>tr.insertCell().textContent=v);
+  }
 
   const peds=await api('/api/results/pedestrians');$('ped-results-body').replaceChildren();
   for(const p of peds.profiles||[]){const tr=$('ped-results-body').insertRow();[p.label,fmt(p.vehicle.fixed_mean),fmt(p.vehicle.adaptive_mean),fmt(p.pedestrian.fixed_mean),fmt(p.pedestrian.adaptive_mean),fmt(p.co2?.fixed_mean),fmt(p.co2?.adaptive_mean)].forEach(v=>tr.insertCell().textContent=v);}
@@ -297,7 +312,7 @@ async function loadPointMetrics(){
         const status=document.createElement('p');status.className='point-status';
         const figures=document.createElement('p');figures.className='point-values';
         const context=document.createElement('p');context.className='point-context';
-        const scope=document.createElement('small');scope.textContent=point.id==='laboratorio'?'Red sintética · referencia de comparación':point.id==='lusitania'?'Los Bodegones · cruce con semáforos':'Reina Sofía · rotonda con semáforos';
+        const scope=document.createElement('small');scope.textContent=point.id==='laboratorio'?'Red sintética · referencia de comparación':point.id==='lusitania'?'Los Bodegones · una entrada por turno':'Reina Sofía · rotonda con semáforos';
         const button=document.createElement('button');button.type='button';button.textContent='Observar este cruce';button.onclick=()=>{if(activeRun)return;selectLocation(point.id);$('traffic-scene').scrollIntoView({behavior:'smooth',block:'center'});};
         card.append(title,status,figures,context,scope,button);$(point.id==='laboratorio'?'laboratory-card':'point-cards').append(card);
       }
@@ -327,6 +342,7 @@ async function describeStudy(){
   const config=study.config;
   $('study-description').textContent=`${config.horizon/60} minutos de llegadas · ${study.seeds.length} semillas en la batería · ${locationName(config.location)}. Cargar las opciones no inicia la simulación.`;
   $('study-reference').textContent='Cada resultado del historial corresponde a una ejecución individual.';
+  if(config.location!=='laboratorio')$('study-reference').textContent=`Control urbano revisado · ${config.horizon/60} minutos de llegadas. Compara con la tabla de esa misma duración y repite las tres semillas para obtener su media.`;
   if(study.id.startsWith('principal_')){
     const seed=Number($('study-seed').value),data=await api('/api/results');
     if(study.id!==$('study-case').value||seed!==Number($('study-seed').value))return;

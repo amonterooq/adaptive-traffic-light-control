@@ -1,5 +1,8 @@
 # Informe de validación
 
+Este informe corresponde a la preparación anterior. La versión 1.7.1 y sus
+comprobaciones se describen en [REVISION_MOVIMIENTOS.md](REVISION_MOVIMIENTOS.md).
+
 Fecha: 11 de noviembre de 2026. Plataforma: Windows, Python 3.12.9 de 64 bits.
 Se ha probado la copia preparada para GitHub; los originales se mantienen intactos.
 

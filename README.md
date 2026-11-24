@@ -5,9 +5,9 @@ Prototipo académico que integra Python, SUMO, TraCI, FastAPI y SQLite para
 observar tráfico simulado, decidir estados semafóricos y comparar estrategias
 con experimentos reproducibles.
 
-![Vista real de la aplicación: cruce de Lusitania en Mérida](documentacion/capturas/lusitania_simulacion.png)
+![Vista de la revisión: flechas por movimiento en Lusitania](docs/revision_movimientos/lusitania.png)
 
-*Captura de la aplicación entregada. Cartografía © OpenStreetMap contributors,
+*Captura de la revisión 1.7.1. Cartografía © OpenStreetMap contributors,
 ODbL. El tráfico, la demanda y la regulación son experimentales.*
 
 **Ana Montero Preciado · Grado en Ingeniería Telemática en Telecomunicación ·
@@ -35,8 +35,8 @@ las mejoras de los casos en los que la estrategia adaptativa empeora el resultad
 - Coches, motos, bicicletas y patinetes; perfiles peatonales y demanda escolar.
 - Interfaz web con vehículos y personas posicionados por SUMO, pausa, velocidad,
   zoom, selección de agentes, supervisión e informes de incidencias.
-- Historial SQLite, exportación CSV y selector de 38 estudios de la memoria.
-- Batería académica de **336 ejecuciones**, con agregados y resúmenes incluidos.
+- Historial SQLite, exportación CSV y selector de 40 estudios reproducibles.
+- Estudio de **348 ejecuciones**: batería base de 336 y doce ensayos urbanos largos.
 
 ## Tecnologías
 
@@ -83,7 +83,7 @@ Los [diagramas originales](documentacion/diagramas/drawio) conservan sus fuentes
 
 ## Cómo decide el controlador
 
-El controlador vehicular alterna los ejes N/S y E/O mediante una máquina de
+En el laboratorio, el controlador alterna los ejes N/S y E/O mediante una máquina de
 estados. La demanda observada suma colas y aproximaciones cuando estas están
 disponibles. Tras el verde mínimo, cambia si el eje contrario tiene demanda y
 el actual está vacío o la diferencia supera la histéresis. El verde máximo
@@ -94,11 +94,49 @@ respaldo, 3 s de amarillo, 2 s de todo-rojo e histéresis de 2 vehículos.
 Si falta una observación o su antigüedad supera 5 s, el adaptativo utiliza
 respaldo temporizado. No es un algoritmo de optimización global.
 
-La extensión peatonal incorpora solicitud, fase exclusiva y despeje supervisado.
-La rotonda tiene un controlador específico que conserva prioridades interiores;
-no debe interpretarse como una simple aplicación del controlador de dos ejes.
+El laboratorio conserva su fase peatonal exclusiva. En Lusitania se da paso
+a una entrada por turno: puede ir recto, a la izquierda y a la derecha. Si hay
+una solicitud peatonal compatible, se abre ese paso y se mantienen cerrados
+los movimientos que lo atraviesan hasta terminar el despeje. Las flechas de la
+vista indican el permiso de cada movimiento; los carriles compartidos pueden
+provocar que un vehículo detenido retenga a los siguientes. Durante el verde
+completo del este se habilitan por separado la derecha del sur y la del norte;
+esta última cede al recto del este. Sus aperturas de 6 s son experimentales.
+
+En Santa Eulalia, cada paso regula su acceso y su salida de forma independiente.
+Los demás accesos mantienen su circulación y la prioridad del anillo.
+Estos planes son propuestas del simulador, no una reproducción comprobada
+de los tiempos ni de las flechas instaladas por el Ayuntamiento.
 El código está en [controller.py](programa/its/controller.py),
 [pedestrians.py](programa/its/pedestrians.py) y [rotonda.py](programa/its/rotonda.py).
+La revisión incorpora [lusitania.py](programa/its/lusitania.py) y
+[movimientos.py](programa/its/movimientos.py).
+
+### Revisión posterior a la memoria
+
+La versión 1.7.1 corrige los movimientos de Lusitania y los pasos independientes
+de Santa Eulalia. Se han repetido los 21 ensayos urbanos afectados y añadido
+doce comparaciones escolares de treinta minutos. Los 315 resúmenes del
+laboratorio se mantienen sin cambios. La interfaz muestra estos resultados
+actuales; el historial identifica las versiones y las señales por movimiento.
+
+El [estudio actualizado](docs/ESTUDIO_ACTUALIZADO.md) documenta condiciones,
+resultados y límites. En Lusitania, el adaptativo reduce la espera peatonal,
+pero aumenta la vehicular y las emisiones respecto al fijo en el ensayo escolar
+largo. En Santa Eulalia disminuyen las tres medias, con una diferencia pequeña
+en CO₂. No se presupone una mejora ambiental por utilizar control adaptativo.
+
+Para reconstruir los 33 ensayos de esta revisión y sus figuras:
+
+```powershell
+.\.venv\Scripts\python.exe simulacion/scripts/actualizar_estudio_movimientos.py --workers 3
+.\.venv\Scripts\python.exe simulacion/scripts/analizar_movimientos.py
+```
+
+Los agregados anteriores se conservan en `datos/procesados/historico_v1_6`.
+La memoria presentada permanece intacta; la revisión del estudio acompaña al
+código actual. La versión anterior está en el commit
+`70f537a91d152af75ee40d79fe07a80c77a070e4`.
 
 ## Organización
 
@@ -115,7 +153,7 @@ adaptive-traffic-light-control/
 │   └── scripts/             # Experimentos, análisis y auditorías
 ├── datos/
 │   ├── entrada/             # Cartografía y atribución
-│   └── procesados/          # Agregados, 336 resúmenes y manifiestos
+│   └── procesados/          # Agregados, resúmenes e histórico del estudio
 ├── documentacion/           # Capturas, diagramas y resultados
 ├── docs/                    # Auditoría, validación y portfolio
 ├── examples/                # Comparación breve reproducible
@@ -195,7 +233,9 @@ nueva con `--output`; el ejemplo evita sobrescribir resultados existentes.
 | Cuatro perfiles peatonales | 80 |
 | Detección cooperativa | 18 |
 | Tráfico mixto y salida escolar | 72 |
-| **Total** | **336** |
+| **Subtotal de la batería base** | **336** |
+| Revisión urbana: dos lugares, tres semillas y dos controles, 30 min | 12 |
+| **Total actual** | **348** |
 
 La referencia utiliza 1.800 s de llegadas y 300 s de calentamiento. Cooperación
 y tráfico mixto usan 180 y 30 s. Sus resultados se analizan por separado.
@@ -221,12 +261,15 @@ de **26,30 a 67,21 s**. No se afirma una mejora universal ni simultánea para to
 Los agregados incluyen intervalos de confianza y la definición estadística en
 [comparacion.json](datos/procesados/comparacion.json). Los
 [336 resúmenes](datos/procesados/resumenes_336.json) conservan métricas por ejecución.
-Las auditorías de esta preparación verificaron los datos brutos originales;
-no se volvieron a simular las 336 ejecuciones.
+Se conservan 315 resúmenes del laboratorio y se han recalculado los 21 urbanos.
+Los doce ensayos largos adicionales se incluyen en
+[movimientos_30min.json](datos/procesados/movimientos_30min.json).
+El [estudio actualizado](docs/ESTUDIO_ACTUALIZADO.md) compara los resultados
+anteriores y actuales, separa las duraciones y analiza esperas y emisiones.
 
-![Resultados de la aplicación](documentacion/capturas/resultados_emisiones.png)
+![Comparación urbana actual](docs/revision_movimientos/comparacion_30min.png)
 
-## Capturas reales
+## Capturas de la entrega original
 
 | Circulación y supervisión | Escenario escolar |
 | --- | --- |
@@ -246,9 +289,9 @@ moderado para mantener la legibilidad, sin recomprimirlos con pérdida.
 ```
 
 Las pruebas `integration` ejecutan SUMO. Consulta los resultados realmente
-obtenidos y sus límites en [VALIDACION.md](docs/VALIDACION.md).
-En esta preparación pasaron las 111 pruebas Python y las 102 comprobaciones
-de los seis guiones de navegador.
+obtenidos y sus límites en [REVISION_MOVIMIENTOS.md](docs/REVISION_MOVIMIENTOS.md).
+El informe [VALIDACION.md](docs/VALIDACION.md) conserva las 111 pruebas Python y
+102 comprobaciones de navegador realizadas en la preparación anterior.
 Los guiones de navegador requieren Node.js, Playwright y un navegador;
 las instrucciones originales se conservan en la guía de reproducción.
 

@@ -9,7 +9,7 @@ def respuesta(version, title='Mérida · Laboratorio de movilidad'):
     return io.BytesIO(json.dumps({'info':{'title':title,'version':version}}).encode())
 
 
-@pytest.mark.parametrize('version,expected', [('1.6.0',True),('1.5.0',False),('1.4.0',False)])
+@pytest.mark.parametrize('version,expected', [('1.7.1',True),('1.6.0',False),('1.5.0',False),('1.4.0',False)])
 def test_reutilizar_solo_la_version_actual(monkeypatch,version,expected):
     monkeypatch.setattr(abrir.urllib.request,'urlopen',lambda *a,**k:respuesta(version))
     assert abrir.existing_server(8765)==('http://127.0.0.1:8765' if expected else None)
@@ -34,7 +34,7 @@ def servidores(monkeypatch,versiones):
 
 @pytest.mark.parametrize('sin_navegador',[False,True])
 def test_doble_clic_reutiliza_actual_detras_de_versiones_antiguas(monkeypatch,capsys,sin_navegador):
-    consultados=servidores(monkeypatch,{8765:'1.4.0',8766:'1.5.0',8767:'1.6.0'})
+    consultados=servidores(monkeypatch,{8765:'1.5.0',8766:'1.6.0',8767:'1.7.1'})
     urls=[]
     monkeypatch.setattr(abrir.webbrowser,'open',urls.append)
     monkeypatch.setattr(abrir,'available_socket',lambda *_:pytest.fail('No debe abrir otro servidor'))
@@ -102,6 +102,6 @@ def test_diez_puertos_ocupados_producen_mensaje_util(monkeypatch):
 
 
 def test_busqueda_respeta_el_puerto_inicial(monkeypatch):
-    consultados=servidores(monkeypatch,{9009:'1.6.0'})
+    consultados=servidores(monkeypatch,{9009:'1.7.1'})
     assert abrir.compatible_server(9000)=='http://127.0.0.1:9009'
     assert consultados==list(range(9000,9010))

@@ -7,10 +7,11 @@ from its.runner import run
 from its.trafico import TrafficConfig
 
 
-def test_catalogo_cubre_las_336_ejecuciones_y_se_puede_cargar():
+def test_catalogo_cubre_bateria_y_ampliacion_de_treinta_minutos():
     estudios = catalogo_estudios()
-    assert len(estudios) == 38
-    assert sum(len(e['seeds']) * len(e['modes']) for e in estudios) == 336
+    assert len(estudios) == 40
+    assert sum(len(e['seeds']) * len(e['modes']) for e in estudios) == 348
+    assert sum(len(e['seeds']) * len(e['modes']) for e in estudios if not e['id'].startswith('movimientos_30min_')) == 336
     assert len({e['id'] for e in estudios}) == len(estudios)
     for estudio in estudios:
         peticion = RunRequest(**estudio['config'])

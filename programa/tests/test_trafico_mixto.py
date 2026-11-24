@@ -84,7 +84,7 @@ def test_rotonda_tiene_anillo_cuatro_pasos_y_salida_don_benito():
 def test_migracion_conserva_sesiones_y_permite_estado_rotonda(tmp_path):
     path=tmp_path/'historial.sqlite3'
     schema=Path(__file__).parents[1].joinpath('its/schema.sql').read_text(encoding='utf-8')
-    schema=schema.replace(",'GGGG','yyyy'",'').replace('user_version = 4','user_version = 3')
+    schema=schema.replace("length(state)=4 AND state NOT GLOB '*[^Gyr]*'", "state IN ('GrGr','rGrG','yryr','ryry','rrrr')").replace('user_version = 5','user_version = 3')
     with sqlite3.connect(path) as db:
         db.executescript(schema)
         db.execute("INSERT INTO runs VALUES ('a','medio','fijo',101,'fecha','complete','{}','{}')")
@@ -96,7 +96,7 @@ def test_migracion_conserva_sesiones_y_permite_estado_rotonda(tmp_path):
     store.sample('a',{'t':1,'q_N':0,'q_E':0,'q_S':0,'q_W':0,'state':'GGGG',
                       'fallback':False,'arrived':1,'in_network':0})
     with store.connect() as db:
-        assert db.execute('PRAGMA user_version').fetchone()[0]==4
+        assert db.execute('PRAGMA user_version').fetchone()[0]==5
         assert not db.execute('PRAGMA foreign_key_check').fetchall()
 
 

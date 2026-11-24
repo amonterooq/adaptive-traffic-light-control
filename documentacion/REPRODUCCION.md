@@ -1,5 +1,33 @@
 # Reproducción de experimentos y pruebas
 
+## Control revisado de los emplazamientos
+
+La versión 1.7.1 cambia Lusitania (movimientos compatibles con peatones y
+derechas adicionales durante el verde del este) y Santa Eulalia (pasos por
+acceso). El laboratorio conserva su control. Se han recalculado los 21 ensayos
+urbanos de la batería de 336 y añadido doce ensayos escolares de treinta minutos.
+Los 315 resúmenes del laboratorio permanecen iguales. Las tablas de la aplicación
+utilizan los agregados actuales; los originales están en
+`datos/procesados/historico_v1_6`. El código presentado se conserva en el commit
+`70f537a91d152af75ee40d79fe07a80c77a070e4`.
+
+Para reproducir los 33 ensayos de la revisión, auditar sus viajes y actualizar
+las tablas y figuras:
+
+```powershell
+.\.venv\Scripts\python.exe simulacion/scripts/actualizar_estudio_movimientos.py --workers 3
+.\.venv\Scripts\python.exe simulacion/scripts/analizar_movimientos.py
+```
+
+El primer script valida los resultados ya generados para esa revisión del motor
+o ejecuta los que faltan. Una carpeta incompleta produce un error explícito;
+no se mezcla con una ejecución distinta. El segundo analiza los agregados.
+El [estudio actualizado](../docs/ESTUDIO_ACTUALIZADO.md) detalla resultados y límites.
+Los apartados siguientes describen la batería base; `reproducir_todo.py` ejecuta
+sus 336 ensayos, mientras que los doce urbanos largos se reproducen con las
+órdenes anteriores. Los recuentos de validación antiguos se conservan como
+registro histórico, separados de la revisión actual.
+
 > Edición para GitHub: ejecutar los comandos desde la raíz del repositorio,
 > aunque la guía original la denomine `Proyecto`. Esta distribución incluye
 > agregados, resúmenes y manifiestos, pero excluye las trazas masivas de
@@ -52,7 +80,8 @@ reutiliza su dirección.
 6. Comparar ambas filas del historial. Repetir las demás semillas del estudio
    para obtener su media.
 
-El catálogo contiene 38 configuraciones. Los cinco estudios principales usan
+El catálogo contiene 40 configuraciones: las 38 de la batería base y dos
+estudios urbanos escolares de treinta minutos. Los cinco estudios principales usan
 las semillas 101–110; los ensayos de sensibilidad, cooperación y tráfico mixto
 usan 101–103. Los estudios cooperativos comparan tres formas de detección
 (sensores, V2I al 50 % y V2I al 100 %) con el control adaptativo.

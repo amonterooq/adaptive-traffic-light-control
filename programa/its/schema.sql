@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS samples (
     q_e INTEGER NOT NULL CHECK(q_e >= 0),
     q_s INTEGER NOT NULL CHECK(q_s >= 0),
     q_w INTEGER NOT NULL CHECK(q_w >= 0),
-    state TEXT NOT NULL CHECK(state IN ('GrGr','rGrG','yryr','ryry','rrrr','GGGG','yyyy')),
+    state TEXT NOT NULL CHECK(length(state)=4 AND state NOT GLOB '*[^Gyr]*'),
     fallback INTEGER NOT NULL CHECK(fallback IN (0,1)),
     arrived INTEGER NOT NULL,
     in_network INTEGER NOT NULL,
@@ -39,4 +39,11 @@ CREATE TABLE IF NOT EXISTS cooperative_samples (
     PRIMARY KEY (run_id,t),
     FOREIGN KEY (run_id,t) REFERENCES samples(run_id,t) ON DELETE CASCADE
 );
-PRAGMA user_version = 4;
+CREATE TABLE IF NOT EXISTS movement_samples (
+    run_id TEXT NOT NULL,
+    t INTEGER NOT NULL,
+    payload_json TEXT NOT NULL,
+    PRIMARY KEY (run_id,t),
+    FOREIGN KEY (run_id,t) REFERENCES samples(run_id,t) ON DELETE CASCADE
+);
+PRAGMA user_version = 5;

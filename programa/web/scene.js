@@ -188,15 +188,27 @@ class SceneView {
     const colors=['#ec7566','#f4c365','#67dbb2'];
     positions.forEach(([x,y],i)=>{
       const p=this.point(cx+x,cy+y),s=Math.max(1.4,Math.min(4,this.scale*.5));
+      const turns=sample?.movement_signals?.[['N','E','S','W'][i]];
+      if(this.location==='lusitania'&&turns){
+        const u=Math.max(3.5,s);
+        ctx.fillStyle='#263d3f';ctx.fillRect(p[0]-6*u,p[1]-2*u,12*u,4*u);
+        ctx.font=`bold ${3*u}px Segoe UI`;ctx.textAlign='center';
+        [['l','←'],['s','↑'],['r','→']].forEach(([turn,arrow],j)=>{
+          ctx.fillStyle=['G','g'].includes(turns[turn])?'#67dbb2':turns[turn]==='y'?'#f4c365':'#ec7566';
+          ctx.fillText(arrow,p[0]+(j-1)*4*u,p[1]+u);
+        });
+        return;
+      }
       ctx.fillStyle='#263d3f';ctx.beginPath();ctx.roundRect(p[0]-2.1*s,p[1]-4.8*s,4.2*s,9.6*s,s);ctx.fill();
       const state=sample?.state?.[i],active=['G','g'].includes(state)?2:state==='y'?1:state==='r'?0:-1;
       colors.forEach((color,n)=>{ctx.fillStyle=active===n?color:'#506064';ctx.beginPath();ctx.arc(p[0],p[1]+(n-1)*2.65*s,.95*s,0,Math.PI*2);ctx.fill();});
     });
     if(this.geometry.pedestrians){
-      const pedestrianPositions=this.location!=='laboratorio'?this.geometry.lanes.filter(l=>l.kind==='crossing').map(l=>[l.shape[0][0]-cx,l.shape[0][1]-cy]):[[8,5.2],[5.2,-8],[-8,-5.2],[-5.2,8]];
-      for(const [x,y]of pedestrianPositions){
+      const pedestrianPositions=this.location!=='laboratorio'?this.geometry.lanes.filter(l=>l.kind==='crossing').map(l=>[l.shape[0][0]-cx,l.shape[0][1]-cy,l.id.replace(/_\d+$/,'')]):[[8,5.2],[5.2,-8],[-8,-5.2],[-5.2,8]];
+      for(const [x,y,id]of pedestrianPositions){
         const p=this.point(cx+x,cy+y),r=Math.max(4,Math.min(9,this.scale*1.15));
-        ctx.fillStyle=sample?.ped_signal==='G'?'#167266':sample?.ped_signal?'#b9554c':'#7c8d83';
+        const color=sample?.ped_signals?.[id]??sample?.ped_signal;
+        ctx.fillStyle=color==='G'?'#167266':color?'#b9554c':'#7c8d83';
         ctx.beginPath();ctx.arc(...p,r,0,Math.PI*2);ctx.fill();
         ctx.fillStyle='#fff';ctx.font=`700 ${Math.max(6,r*1.2)}px Segoe UI`;ctx.textAlign='center';ctx.fillText('P',p[0],p[1]+r*.4);
       }
@@ -333,6 +345,24 @@ class SceneView {
     if(this.location==='santa_eulalia'&&/[Gg]/.test(sample.state)){title.textContent='Circulación en la rotonda';message.textContent='Quien entra cede el paso a los vehículos del anillo. Los semáforos protegen el paso de peatones.';}
     else if(this.location!=='laboratorio'&&/[Gg]/.test(sample.state)){title.textContent='Pasan por '+this.geometry.arms[['G','g'].includes(sample.state[0])?'N':'E'].name;message.textContent='Los coches pueden seguir recto o girar. Al girar a la izquierda ceden a los movimientos prioritarios.';}
     if(sample.t<20)message.textContent=this.location!=='laboratorio'?'Los coches llegan por los cuatro accesos. Los puntos azules señalan vehículos equipados para enviar avisos.':'Los primeros coches se acercan desde accesos de 300 m. Usa «Toda la red» para verlos llegar.';
+    if(this.location==='lusitania'&&sample.movement_signals){
+      const index=sample.state.indexOf('G');
+      if(index>=0){
+        const arm=['N','E','S','W'][index],turns=sample.movement_signals[arm];
+        title.textContent='Turno de '+this.geometry.arms[arm].label;
+        const names={l:'izquierda',s:'recto',r:'derecha'};
+        message.textContent='Permitido: '+Object.keys(names).filter(k=>turns[k]==='G').map(k=>names[k]).join(', ')+'. ';
+        message.textContent+=sample.ped_signal==='G'?'Cruza el paso en verde; los giros que lo atraviesan esperan.':sample.ped_stage==='ped_clear'?'Los giros cerrados esperan a que termine de cruzar la última persona.':'Las otras entradas esperan. Las flechas muestran cada movimiento.';
+        if(['G','g','y'].includes(sample.right_turn_signal)){
+          const arm=sample.right_turn_arm==='N'?'norte':'sur';
+          message.textContent='El este mantiene recto, izquierda y derecha. '+(sample.right_turn_signal==='y'?`Termina el giro a la derecha desde el ${arm}.`:sample.right_turn_signal==='g'?'La derecha del norte puede incorporarse cediendo a los coches del este.':'También puede girar a la derecha la entrada sur.');
+        }
+      }
+    }
+    if(this.location==='santa_eulalia'&&sample.ped_signals&&Object.values(sample.ped_signals).includes('G')){
+      title.textContent='Pasos peatonales independientes';
+      message.textContent='Cada paso en verde cierra su acceso y su salida. Los otros accesos pueden seguir circulando con prioridad del anillo.';
+    }
     if(sample.fallback)message.textContent='Faltan datos de los detectores: el semáforo está usando tiempos fijos de respaldo.';
   }
   select(event) {
